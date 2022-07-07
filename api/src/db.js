@@ -1,7 +1,8 @@
 
-const { Sequelize } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const { userInfo } = require('os');
 const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
@@ -40,6 +41,8 @@ const { Pokemon } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
+
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

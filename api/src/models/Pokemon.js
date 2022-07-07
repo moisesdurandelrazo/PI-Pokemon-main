@@ -6,7 +6,32 @@ module.exports = (sequelize) => {
   sequelize.define('pokemon', {
     name: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false,
     },
-  });
+    hp: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    defense:{
+      type: DataTypes.INTEGER
+    },
+    speed: {
+      type: DataTypes.INTEGER
+    },
+    height:{
+      type: DataTypes.INTEGER
+    },
+    weigth: {
+      type: DataTypes.INTEGER
+    }
+  })
+
 };
+
+
+
+pokemon.sync({force: false})
+.then(()=> {
+  console.log('Tabla sincronizada')
+})
