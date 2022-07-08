@@ -28,10 +28,3 @@ module.exports = (sequelize) => {
   })
 
 };
-
-
-
-pokemon.sync({force: false})
-.then(()=> {
-  console.log('Tabla sincronizada')
-})
