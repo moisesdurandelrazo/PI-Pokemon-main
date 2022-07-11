@@ -3,11 +3,14 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
     sequelize.define('type',{
-        name: {
-          type: DataTypes.STRING,
-          unique: true,
-          allowNull: false,
+      slot: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
         },
-      }
-      )
-    }
+        name: {
+            type: DataTypes.STRING,
+            unique: true,
+        }
+    })
+}

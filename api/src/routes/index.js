@@ -3,60 +3,27 @@ const axios = require('axios')
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
-const { Pokemon,Type } = require('../db.js')
+const pokemonRouter = require('./pokemonRouter');
+const typesRouter = require('./typesRouter');
+
+const { Pokemon,Type } = require('../db.js');
+
 
 const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-
-router.get('/pokemons', async(req, res)=> {
-    const numeroDePokemons = 5
-    const {name, hp, defense, speed, height, weigth } = req.params
-    try{
-    // 1. Hacer el fetch -> Lista de pokemons existentes
-        let respuestaApi = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=20&limit=${numeroDePokemons}`)
-        // 2. Transformar la data a json (variable.data)
-        let pokemonsIncompletos = respuestaApi.data.results
-        let pokemonsCompletos = await Promise.all(
-            pokemonsIncompletos.map(async(pokemon) => {
-                let {data} = await axios.get(pokemon.url)
-
-                // Formatear la data
-                return {
-                    name: data.name,
-                    height: data.height,
-                    weigth: data.weigth,
-                    types: data.types,
-                    img: data.sprites.front_default
-                }
-            })
-        )        
-
-        const pokemonsDB = await Pokemon.findAll()
-        const todosLosPokemons = [...pokemonsCompletos, ...pokemonsDB]
-    // 4. Juntarlas en una sola lista. [...todosLosPokemonsDeLaApi] - [...todosLosPokesDeTuBase] // merge two arrays
-    // 5. Regresar el nuevo arreglo.
-    return res.json(200, todosLosPokemons)
-    }
-    catch (e) {
-        res.send ({err: e.message})
-    }
-})
-
-
-// const pokemons = fetch('localghosra3000/pokemons')
-
-
-// pokemons.map(pokemon => <PokemonCard {...pokemon} />)
-
+router.use('/pokemons', pokemonRouter);
+router.use('/types', typesRouter);
 
 router.get('/pokemons/{idPokemon}', async(req, res)=> {
     const {idPokemon} = req.query
 })
 
-router.get('/pokemons', async(req, res)=> {
+router.get('/pokemons?name=:name', async(req, res)=> {
     const {name}= req.query
+
+    res.json(200, 'ruta custom')
 })
 
 router.post('/pokemons', async(req, res)=> {
