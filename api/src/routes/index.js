@@ -13,24 +13,24 @@ const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-router.use('/pokemons', pokemonRouter);
 router.use('/types', typesRouter);
+router.use('/pokemons', pokemonRouter);
 
-router.get('/pokemons/{idPokemon}', async(req, res)=> {
-    const {idPokemon} = req.query
-})
+// router.get('/pokemons/{idPokemon}', async(req, res)=> {
+//     const {idPokemon} = req.query
+// })
 
-router.get('/pokemons?name=:name', async(req, res)=> {
-    const {name}= req.query
+// router.get('/pokemons?name=:name', async(req, res)=> {
+//     const {name}= req.query
 
-    res.json(200, 'ruta custom')
-})
+//     res.json(200, 'ruta custom')
+// })
 
-router.post('/pokemons', async(req, res)=> {
-    const {name, hp, defense, speed, height, weigth } = req.body
-})
+// router.post('/pokemons', async(req, res)=> {
+//     const {name, hp, defense, speed, height, weigth } = req.body
+// })
 
-router.get('/types', async(req, res)=> {})
+// router.get('/types', async(req, res)=> {})
 
 
 

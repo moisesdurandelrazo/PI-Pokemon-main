@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createPokemon, getTypes } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-
-import { createPokemon } from "../redux/actions";
 
 // import { getPokemons } from "../../actions";
 // import style from "./form.module.css";
@@ -17,13 +16,14 @@ const initialValues = {
   types: [],
 };
 
-export const CreatePokemon = () => {
-  //   const dispatch = useDispatch();
+export const CreatePokemon = (props) => {
+  const dispatch = useDispatch();
   const options = useSelector((store) => store.types);
+  //   // UseEffect que haga dispatch de getTypes
+  useEffect(() => {
+    dispatch(getTypes());
+  }, []);
 
-  // UseEffect que haga dispatch de getTypes
-
-  console.log({ options });
   const validate = (input) => {
     let errors = {};
     if (!input.name) {
@@ -34,6 +34,8 @@ export const CreatePokemon = () => {
   };
 
   const [data, setData] = useState(initialValues);
+
+  console.log({ data });
 
   const [errors, setErrors] = useState({});
 
@@ -74,17 +76,8 @@ export const CreatePokemon = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    // const crear = await fetch("https://kevindex.herokuapp.com/pokemons", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // });
-
-    // createPokemon(data) yo hice
-    // setData(initialValues);
+    dispatch(createPokemon(data));
+    setData(initialValues);
   };
 
   return (
@@ -162,19 +155,19 @@ export const CreatePokemon = () => {
 
         <h1>types</h1>
         <div className="types">
-          {/* {options?.map((t) => (
-              <div key={t.id}>
-                <input
-                  type="checkbox"
-                  name={t.name}
-                  value={t.id}
-                  id={t.id}
-                  onChange={checkbox}
-                />
-                <label htmlFor={t.id}>{t.name}</label>
-                {t.id % 4 === 0 ? <br /> : null}
-              </div>
-            ))} */}
+          {options?.map((t) => (
+            <div key={t.slot}>
+              <input
+                type="checkbox"
+                name={t.name}
+                value={t.slot}
+                id={t.slot}
+                onChange={checkbox}
+              />
+              <label htmlFor={t.slot}>{t.name}</label>
+              {t.slot % 4 === 0 ? <br /> : null}
+            </div>
+          ))}
           <input type="submit" className="submit" />
         </div>
       </form>

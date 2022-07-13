@@ -5,7 +5,8 @@ const Pokemon = ({ name, height, img, types, id }) => {
   return (
     <div>
       <Link to={`/pokemons/${id}`}>
-        <h2>Poke</h2>
+        <h2>Pokemon</h2>
+        <p>{id}</p>
         <p>{name}</p>
         <p>{height}</p>
         <img src={img} alt={id} />

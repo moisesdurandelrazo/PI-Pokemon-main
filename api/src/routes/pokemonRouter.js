@@ -14,6 +14,7 @@ const getFullPokemons = incompletePokemons => {
         id: data.id,
         name: data.name,
         img: data.sprites.front_default,
+        attack: data.stats[1].base_stat,
         types: data.types.map((t, idx) => ({id: idx, name: t.type.name})),
       };
     })
@@ -35,6 +36,7 @@ const getPokemonByName = async pokemonName => {
         id: db.id,
         name: db.name,
         type: db.types,
+        attack: db.attack,
         img: 'https://media.giphy.com/media/DRfu7BT8ZK1uo/giphy.gif',
       },
     ];
@@ -71,7 +73,7 @@ pokemonRouter.get('/', async (req, res) => {
 
   try {
     const { data } = await axios.get(
-      'https://pokeapi.co/api/v2/pokemon?limit=5'
+      'https://pokeapi.co/api/v2/pokemon?limit=20'
     );
     const apiPokemons = await getFullPokemons(data.results);
     const combinedPokemons = [...dbPokemons, ...apiPokemons];
@@ -83,7 +85,7 @@ pokemonRouter.get('/', async (req, res) => {
 
 pokemonRouter.get('/:id', async (req, res)=> {
   const { id } = req.params
-  console.log({isNan: isNaN(id)})
+  console.log({isNan: isNaN(id), id})
   if(isNaN(id)){
     const db = await Pokemon.findOne({
       where: {
@@ -123,7 +125,7 @@ pokemonRouter.get('/:id', async (req, res)=> {
     };
     return res.json(201, formattedPokemon)
   } catch(e) {
-    return  res.send(401, {msg: 'Pokemon no encontrado'})
+    return  res.json(401, {msg: 'Pokemon no encontrado'})
   }
 })
 
