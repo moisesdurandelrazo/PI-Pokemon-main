@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { getpokemon } from "../redux/actions/index";
+import { getpokemon } from "../../redux/actions/index";
 import { useDispatch } from "react-redux";
 
 const SearchInput = ({ resetFilters }) => {

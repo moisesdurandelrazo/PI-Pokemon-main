@@ -3,7 +3,7 @@ import "./App.css";
 import { Switch, Route } from "react-router-dom";
 import Pokemons from "./components/Pokemons";
 import PokemonsDetail from "./components/PokemonDetail";
-import CreatePokemon from "./components/CreatePokemon";
+import CreatePokemon from "./components/CreatePokemon/CreatePokemon";
 import PokeHome from "./components/PokeHome";
 import Nav from "./components/Nav/Nav";
 // import Nav from "./components/Nav";

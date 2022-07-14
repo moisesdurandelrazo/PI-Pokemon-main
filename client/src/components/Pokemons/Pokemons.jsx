@@ -4,10 +4,10 @@ import {
   sortPokemon,
   getTypes,
   typesFilters,
-} from "../redux/actions";
+} from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import Pokemon from "./Pokemon";
-import SearchInput from "./SearchInput";
+import Pokemon from "../Pokemon";
+import SearchInput from "../SearchInput";
 
 export const Pokemons = (props) => {
   const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { createPokemon, getTypes } from "../redux/actions";
+import { createPokemon, getTypes } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 // import { getPokemons } from "../../actions";
