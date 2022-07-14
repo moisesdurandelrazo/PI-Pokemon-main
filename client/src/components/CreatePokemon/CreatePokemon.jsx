@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createPokemon, getTypes } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import "./CreatePokemon.css";
 
 // import { getPokemons } from "../../actions";
 // import style from "./form.module.css";
@@ -81,7 +82,7 @@ export const CreatePokemon = (props) => {
   };
 
   return (
-    <div className="containercreate">
+    <div className="create-pokemon-container">
       <form className="form" onSubmit={submit}>
         <div className="">
           <h1>Crea tu propio Pokemon</h1>
