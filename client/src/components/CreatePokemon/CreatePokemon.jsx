@@ -7,13 +7,13 @@ import "./CreatePokemon.css";
 // import style from "./form.module.css";
 
 const initialValues = {
-  name: "",
-  hp: 0,
-  attack: 0,
-  defense: 0,
-  speed: 0,
-  height: 0,
-  weigth: 0,
+  name: "moi",
+  hp: 5,
+  attack: 5,
+  defense: 5,
+  speed: 5,
+  height: 5,
+  weigth: 5,
   types: [],
 };
 
@@ -23,7 +23,7 @@ export const CreatePokemon = (props) => {
   //   // UseEffect que haga dispatch de getTypes
   useEffect(() => {
     dispatch(getTypes());
-  }, []);
+  }, [dispatch]);
 
   const validate = (input) => {
     let errors = {};
@@ -44,7 +44,8 @@ export const CreatePokemon = (props) => {
     if (e.target.name !== "name") {
       setData({
         ...data,
-        [e.target.name]: Number(e.target.value) <= 0 ? 0 : e.target.value,
+        [e.target.name]:
+          Number(e.target.value) <= 0 ? 0 : Number(e.target.value),
       });
     } else {
       setErrors(
@@ -61,6 +62,7 @@ export const CreatePokemon = (props) => {
   };
 
   const checkbox = (e) => {
+    console.log({ e });
     if (data.types.includes(e.target.value)) {
       data.types = data.types.filter((id) => id !== e.target.value);
       setData({
@@ -70,7 +72,10 @@ export const CreatePokemon = (props) => {
     } else {
       setData({
         ...data,
-        types: [...data.types, e.target.value],
+        types: [
+          ...data.types,
+          { slot: Number(e.target.value), name: e.target.name },
+        ],
       });
     }
   };

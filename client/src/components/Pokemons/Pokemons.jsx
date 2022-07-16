@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Pokemon from "../Pokemon";
 import SearchInput from "../SearchInput";
 
+const perPage = 12;
+
 export const Pokemons = (props) => {
   const dispatch = useDispatch();
   const pokemons = useSelector((state) => state.pokemons);
@@ -16,6 +18,15 @@ export const Pokemons = (props) => {
   const [sort, setSort] = useState("0");
   const [typeFilter, setTypeFilter] = useState("0");
   const [sourceFilter, setSourceFilter] = useState("0");
+  const [currentPage, setCurrentPage] = useState("1");
+
+  const indexOfLastPost = currentPage * perPage;
+  const indexOfFirstPost = indexOfLastPost - perPage;
+
+  console.log({ pokemons });
+  const setPage = (pageNum) => {
+    setCurrentPage({ currentPage: pageNum });
+  };
 
   React.useEffect(() => {
     dispatch(getAllpokemons());
@@ -27,7 +38,15 @@ export const Pokemons = (props) => {
 
   if (!pokemons) return <h2>Buscando pokemons...</h2>;
 
-  console.log({ pokemons });
+  const currentPokemons = pokemons.slice(indexOfFirstPost, indexOfLastPost);
+
+  const pageNumbers = [];
+
+  for (let i = 1; i <= Math.ceil(pokemons.length / perPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  console.log({ currentPokemons });
 
   const resetFilters = () => {
     setSort(0);
@@ -104,9 +123,22 @@ export const Pokemons = (props) => {
         <option value="DB">Base de datos</option>
       </select>
 
-      {pokemons.filter(handleFilters).map((pokemon) => (
+      {currentPokemons.filter(handleFilters).map((pokemon) => (
         <Pokemon {...pokemon} key={pokemon.name} />
       ))}
+      <div className="pagination">
+        {pageNumbers.map((pageNum, index) => (
+          <span
+            key={index}
+            className={pageNum === currentPage ? "active" : ""}
+            onClick={() => {
+              setCurrentPage(pageNum);
+            }}
+          >
+            {pageNum}
+          </span>
+        ))}
+      </div>
     </div>
   );
 };
