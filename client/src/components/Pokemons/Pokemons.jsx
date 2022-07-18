@@ -23,7 +23,7 @@ export const Pokemons = (props) => {
   const indexOfLastPost = currentPage * perPage;
   const indexOfFirstPost = indexOfLastPost - perPage;
 
-  console.log({ pokemons });
+  // console.log({ pokemons });
   const setPage = (pageNum) => {
     setCurrentPage({ currentPage: pageNum });
   };
@@ -46,7 +46,7 @@ export const Pokemons = (props) => {
     pageNumbers.push(i);
   }
 
-  console.log({ currentPokemons });
+  // console.log({ currentPokemons });
 
   const resetFilters = () => {
     setSort(0);

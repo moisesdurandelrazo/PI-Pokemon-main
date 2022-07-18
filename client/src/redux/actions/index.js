@@ -5,6 +5,8 @@ export const CREATE_POKEMON = "CREATE_POKEMON";
 export const GET_TYPES = "GET_TYPES";
 export const SORT_POKEMON = "SORT_POKEMON";
 export const FILTER_TYPES = "FILTER_TYPES";
+export const ADD_FAVORITE = "ADD_FAVORITE";
+export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 
 // Usar ruta 'http://localhost:3001/pokemons' para buscar todas los pokemons en nuestro back
 
@@ -81,6 +83,22 @@ export const sortPokemon = (sortType) => (dispatch) => {
 //action filter
 
 export const typesFilters = (filterType) => (dispatch) => {
-  console.log({ filterType });
+  // console.log({ filterType });
   return dispatch({ type: FILTER_TYPES, payload: filterType });
+};
+
+//favourites
+
+export const addFav = (id) => (dispatch) => {
+  return dispatch({
+    type: ADD_FAVORITE,
+    payload: id,
+  });
+};
+
+export const removeFavorite = (id) => (dispatch) => {
+  return dispatch({
+    type: REMOVE_FAVORITE,
+    payload: id,
+  });
 };

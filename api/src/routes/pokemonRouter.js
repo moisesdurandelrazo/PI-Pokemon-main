@@ -184,10 +184,19 @@ pokemonRouter.post("/", async (req, res) => {
 
   const existe = await Pokemon.findOne({ where: { name: name } });
   if (existe) return res.json({ info: "El pokemon ya existe" });
+  // await Pokemon.findAll({ include: Type });
   try {
-    const pokemon = await Pokemon.create(req.body);
-    await pokemon.setTypes(types);
+    const pokemon = await Pokemon.create(req.body); //, { include: Type }
+
+    let typeRes = await Type.findAll({
+      where: { name: types.name },
+    });
+    await pokemon.addType(typeRes);
     res.status(201).json(pokemon);
+    const result = await Pokemons.findOne({
+      where: { name: name },
+      include: Type,
+    });
   } catch (e) {
     res.status(404).send(e);
   }

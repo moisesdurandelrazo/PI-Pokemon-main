@@ -19,6 +19,7 @@ const initialValues = {
 
 export const CreatePokemon = (props) => {
   const dispatch = useDispatch();
+
   const options = useSelector((store) => store.types);
   //   // UseEffect que haga dispatch de getTypes
   useEffect(() => {
@@ -36,7 +37,7 @@ export const CreatePokemon = (props) => {
 
   const [data, setData] = useState(initialValues);
 
-  console.log({ data });
+  // console.log({ data });
 
   const [errors, setErrors] = useState({});
 
@@ -84,6 +85,9 @@ export const CreatePokemon = (props) => {
     e.preventDefault();
     dispatch(createPokemon(data));
     setData(initialValues);
+    document
+      .querySelectorAll("input[type=checkbox]")
+      .forEach((e) => (e.checked = false));
   };
 
   return (

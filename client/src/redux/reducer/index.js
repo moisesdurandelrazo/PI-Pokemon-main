@@ -6,6 +6,8 @@ import {
   GET_TYPES,
   SORT_POKEMON,
   FILTER_TYPES,
+  ADD_FAVORITE,
+  REMOVE_FAVORITE,
 } from "../actions";
 
 // setear los parametros iniciales
@@ -14,6 +16,7 @@ const initialState = {
   pokemons: null,
   pokemon: null,
   types: null,
+  favorites: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -74,12 +77,28 @@ const rootReducer = (state = initialState, action) => {
         });
         return pokemonTypeNames.includes(action.payload);
       });
-      console.log({ pokefilter, state });
+      // console.log({ pokefilter, state });
       return {
         ...state,
         pokemons: pokefilter,
       };
+    case ADD_FAVORITE:
+      const newFavorite = state.pokemons.filter(
+        (pokemon) => pokemon.id === action.payload
+      )[0];
 
+      return {
+        ...state,
+        favorites: [...state.favorites, newFavorite],
+      };
+    case REMOVE_FAVORITE:
+      const remFavourite = state.favorites.filter(
+        (pokemon) => pokemon.id !== action.payload
+      );
+      return {
+        ...state,
+        favorites: remFavourite,
+      };
     default:
       return state;
   }
