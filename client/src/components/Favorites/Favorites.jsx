@@ -11,23 +11,29 @@ const Favorites = () => {
   return (
     <div>
       <h2>Pokemons Favoritos</h2>
-      <ul>
-        {/* Aqui deberias poner tu lista de peliculas! */}
-        {favorites?.map(({ name, id, img, ...rest }) => {
+      <div>
+        {favorites?.map(({ name, id, img }) => {
           return (
-            <div key={id}>
+            <div className="pokemon" key={id}>
+              <h2>Pokemon</h2>
+              <img className="profile-img" src={img} alt={id} />
+              <div className="description-bk"></div>
               <Link to={`/pokemons/${id}`}>
-                <h2>Pokemon</h2>
-                <p>{id}</p>
-                <p>{name}</p>
-
-                <img src={img} alt={id} />
+                <div className="description">
+                  <p>No.{id}</p>
+                  <p>Nombre: {name}</p>
+                </div>
               </Link>
-              <button onClick={() => dispatch(removeFavorite(id))}>X</button>
+              <button
+                className="btn"
+                onClick={() => dispatch(removeFavorite(id))}
+              >
+                X
+              </button>
             </div>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 };

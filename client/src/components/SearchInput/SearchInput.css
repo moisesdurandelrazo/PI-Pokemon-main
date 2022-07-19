@@ -1,0 +1,40 @@
+* {box-sizing: border-box;}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #c8d3d5;
+}
+
+.topnav .input {
+  float: right;
+  padding: auto;
+}
+
+.topnav input[type=text] {
+  padding: 6px;
+  margin-top: 6px;
+  font-size: 20px;
+  border: none;
+}
+
+
+.topnav .button {
+  float: right;
+  color: white;
+  padding: 6px 10px;
+  margin-top: -1px;
+  margin-right: 3px;
+  background: rgb(3, 113, 146);
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.topnav .button:hover {
+  background: #ccc;
+}

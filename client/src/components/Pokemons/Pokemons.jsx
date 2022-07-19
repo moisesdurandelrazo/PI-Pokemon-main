@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import {
-  getAllpokemons,
-  sortPokemon,
-  getTypes,
-  typesFilters,
-} from "../../redux/actions";
+import { getAllpokemons, sortPokemon, getTypes } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Pokemon from "../Pokemon";
 import SearchInput from "../SearchInput";
+import "./Pokemons.css";
 
 const perPage = 12;
 
@@ -71,57 +67,59 @@ export const Pokemons = (props) => {
   };
 
   return (
-    <div>
+    <div className="all-selects">
       <SearchInput resetFilters={resetFilters} />
-      <h1>Encuentra tu Pokemon</h1>
-      <select
-        value={sort}
-        className="selectOrder"
-        onChange={(e) => {
-          resetFilters();
-          setSort(e.target.value);
-          dispatch(sortPokemon(e.target.value));
-        }}
-      >
-        <option value="0">Seleccione una opcion</option>
-        <option value="A-Z">Ordenar A-Z</option>
-        <option value="Z-A">Ordenar Z-A</option>
-        <option value="attack+">Ordenar MAYOR ATAQUE</option>
-        <option value="attack-">Ordenar MENOR ATAQUE</option>
-      </select>
+      <h1>Atrapa tu Pokemon</h1>
+      <div className="all-selects">
+        <select
+          value={sort}
+          className="select-order"
+          onChange={(e) => {
+            resetFilters();
+            setSort(e.target.value);
+            dispatch(sortPokemon(e.target.value));
+          }}
+        >
+          <option value="0">Seleccione una opcion</option>
+          <option value="A-Z">Ordenar A-Z</option>
+          <option value="Z-A">Ordenar Z-A</option>
+          <option value="attack+">Ordenar MAYOR ATAQUE</option>
+          <option value="attack-">Ordenar MENOR ATAQUE</option>
+        </select>
 
-      <select
-        value={typeFilter}
-        className="selectFilter"
-        onChange={(e) => {
-          resetFilters();
-          setTypeFilter(e.target.value);
-          // dispatch(typesFilters(e.target.value));
-        }}
-      >
-        <option value="0">Tipos</option>
-        {types &&
-          types.map((t) => {
-            return (
-              <option value={t.name} key={t.slot}>
-                {t.name}
-              </option>
-            );
-          })}
-      </select>
+        <select
+          value={typeFilter}
+          className="select-filter"
+          onChange={(e) => {
+            resetFilters();
+            setTypeFilter(e.target.value);
+            // dispatch(typesFilters(e.target.value));
+          }}
+        >
+          <option value="0">Tipos</option>
+          {types &&
+            types.map((t) => {
+              return (
+                <option value={t.name} key={t.slot}>
+                  {t.name}
+                </option>
+              );
+            })}
+        </select>
 
-      <select
-        value={sourceFilter}
-        className="createBy"
-        onChange={(e) => {
-          resetFilters();
-          setSourceFilter(e.target.value);
-        }}
-      >
-        <option value="0">Creado en:</option>
-        <option value="API">API</option>
-        <option value="DB">Base de datos</option>
-      </select>
+        <select
+          value={sourceFilter}
+          className="create-by"
+          onChange={(e) => {
+            resetFilters();
+            setSourceFilter(e.target.value);
+          }}
+        >
+          <option value="0">Creado en:</option>
+          <option value="API">API</option>
+          <option value="DB">Base de datos</option>
+        </select>
+      </div>
 
       {currentPokemons.filter(handleFilters).map((pokemon) => (
         <Pokemon {...pokemon} key={pokemon.name} />

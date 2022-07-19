@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSinglePokemon } from "../../redux/actions";
+import "./PokemonDetail.css";
 
 export const PokemonsDetail = (props) => {
   const params = useParams();
@@ -17,9 +18,11 @@ export const PokemonsDetail = (props) => {
   if (!pokemon) return <h2>Cargando</h2>;
 
   return (
-    <div>
+    <div className="about-section">
       <h1>Detalle</h1>
-      <img src={pokemon.img} alt={pokemon.id} />
+      <div className="image">
+        <img src={pokemon.img} alt={pokemon.id} />
+      </div>
       <h3>Nombre:</h3>
       <p>{pokemon.name}</p>
       <h3>Id</h3>
@@ -31,32 +34,27 @@ export const PokemonsDetail = (props) => {
             return <div key={type.id}>{type.name}</div>;
           })}
         <h3>Peso</h3>
-        <p>{pokemon.weigth}</p>
+        <p>{pokemon.weigth / 10} Kg</p>
         <h3>Altura</h3>
-        <p>{pokemon.height}</p>
+        <p>{pokemon.height / 10} m</p>
         <h3>Estadisticas</h3>
       </div>
       <div className="stats-container">
         <p>
-          <b>HP: </b> {pokemon.hp}
+          <b>vida: </b> {pokemon.hp}
         </p>
         <p>
-          <b>Attack: </b> {pokemon.attack}
+          <b>Ataque: </b> {pokemon.attack}
         </p>
         <p>
-          <b>Defense: </b> {pokemon.defense}
+          <b>Defensa: </b> {pokemon.defense}
         </p>
         <p>
-          <b>Speed: </b> {pokemon.speed}
+          <b>Velocidad: </b> {pokemon.speed}
         </p>
       </div>
     </div>
   );
-
-  //     magen, nombre y tipos)
-  // - [ ] Número de Pokemon (id)
-  // - [ ] Estadísticas (vida, ataque, defensa, velocidad)
-  // - [ ] Altura y peso
 };
 
 export default PokemonsDetail;

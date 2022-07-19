@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { Router } = require("express");
 
-const { Pokemon, Type } = require("../db.js");
+const { Pokemon, Type, TypePokemon } = require("../db.js");
 
 const pokemonRouter = Router();
 
@@ -54,49 +54,6 @@ const getPokemonByName = async (pokemonName) => {
     ];
   }
 };
-
-//
-/*
-async function pokeDbCreate(poke) {
-  let { name, hp, attack, defense, speed, height, weigth, image, types } = poke;
-
-  try {
-    let [poke, created] = await Pokemon.findOrCreate({
-      //cambiar la x
-      where: { name: name },
-      defaults: {
-        image,
-        name,
-        hp,
-        attack,
-        defense,
-        speed,
-        height,
-        weigth,
-      },
-    });
-
-    if (!created) {
-      return "pokemon ya existente";
-    } else {
-      let typeNames = types.map((g) => g.toLowerCase());
-      let typeRes = await Type.findAll({
-        where: { name: typeNames },
-      });
-
-      await poke.addType(typeRes);
-
-      return await Pokemon.findOne({
-        where: { name: name },
-        include: Type,
-      });
-      //return typeRes
-    }
-  } catch (e) {
-    console.log(e);
-  }
-}*/
-//
 
 pokemonRouter.get("/", async (req, res) => {
   const { name } = req.query;
@@ -184,32 +141,19 @@ pokemonRouter.post("/", async (req, res) => {
 
   const existe = await Pokemon.findOne({ where: { name: name } });
   if (existe) return res.json({ info: "El pokemon ya existe" });
-  // await Pokemon.findAll({ include: Type });
+  await Pokemon.findAll({ include: Type });
   try {
     const pokemon = await Pokemon.create(req.body); //, { include: Type }
 
-    let typeRes = await Type.findAll({
-      where: { name: types.name },
+    let allTypes = await Type.findAll({
+      where: { name: types },
     });
-    await pokemon.addType(typeRes);
+    pokemon.addTypes(allTypes);
+
     res.status(201).json(pokemon);
-    const result = await Pokemons.findOne({
-      where: { name: name },
-      include: Type,
-    });
   } catch (e) {
     res.status(404).send(e);
   }
 });
-
-// pokemonRouter.post("/", async (req, res) => {
-//   let info = req.body;
-//   try {
-//     let pokemon = await pokeDbCreate(info);
-//     res.send(pokemon);
-//   } catch (e) {
-//     res.send(e);
-//   }
-// });
 
 module.exports = pokemonRouter;

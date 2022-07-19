@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Nav.css";
 
 const Nav = () => {
   return (
-    <header className="navbar">
+    <header>
       <nav>
-        <ul className="list">
-          <li className="list-item">
-            <Link to="/">Home</Link>
+        <ul>
+          <li>
+            <Link className="active" to="/">
+              Home
+            </Link>
             <Link to="/Pokemons">Pokemons</Link>
             <Link to="/create">Create Pokemon</Link>
             <Link to="/favorites">Favorites</Link>

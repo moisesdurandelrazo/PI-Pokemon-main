@@ -1,4 +1,5 @@
 .pokemon {
+  background-image: linear-gradient(0deg , #130947, #daefdf);
     display: inline-block;
     position: relative;
     width: 400px;
@@ -9,21 +10,23 @@
     box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.3);
     margin: 30px;
 }
+h2{
+  color: black;
+  text-indent: 1rem;
+}
 .profile-img {
-    height: 10rem;
-    left: -12px;
-    display: block;
-  margin-left: auto;
-  margin-right: auto; 
-
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  
     
 }
 
 .description-bk {
-    background-image: linear-gradient(0deg , #3f5efb, #fc466b);
+  background-image: linear-gradient(0deg , #3f5efb, #fc466b);
   border-radius: 30px;
   position: absolute;
-  top: 55%;
+  top: 58%;
   left: -6px;
   height: 95%;
   width: 110%;
@@ -40,16 +43,21 @@
   background-color: rgb(0, 4, 255);
 }
 .description {
+    white-space: nowrap;
     text-indent: -5rem;
+    letter-spacing: .5rem;
     position: absolute;
   color: #fff;
   font-weight: 500;
   left: 125px;
-  bottom: 5%;
+  bottom: -5%;
 }
 
 .type {
     text-indent: -5rem;
+    letter-spacing: normal;
+    white-space: nowrap;
+    
     
    
 }

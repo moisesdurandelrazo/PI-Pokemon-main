@@ -7,13 +7,13 @@ import "./CreatePokemon.css";
 // import style from "./form.module.css";
 
 const initialValues = {
-  name: "moi",
-  hp: 5,
-  attack: 5,
-  defense: 5,
-  speed: 5,
-  height: 5,
-  weigth: 5,
+  name: "",
+  hp: "",
+  attack: "",
+  defense: "",
+  speed: "",
+  height: "",
+  weigth: "",
   types: [],
 };
 
@@ -73,10 +73,7 @@ export const CreatePokemon = (props) => {
     } else {
       setData({
         ...data,
-        types: [
-          ...data.types,
-          { slot: Number(e.target.value), name: e.target.name },
-        ],
+        types: [...data.types, e.target.name],
       });
     }
   };
@@ -96,7 +93,7 @@ export const CreatePokemon = (props) => {
         <div className="">
           <h1>Crea tu propio Pokemon</h1>
           <p className={errors.name ? "danger" : "question"}>
-            <label>Pokemon name</label>
+            <label>Nombre del pokemon</label>
             <input
               type="text"
               placeholder="pikachu.."
@@ -108,7 +105,7 @@ export const CreatePokemon = (props) => {
           </p>
           {errors.name ? <p className="danger">{errors.username}</p> : null}
           <p className="question">
-            <label>hp</label>
+            <label>Vida</label>
             <input
               type="number"
               name="hp"
@@ -117,7 +114,7 @@ export const CreatePokemon = (props) => {
             />
           </p>
           <p className="question">
-            <label>attack</label>
+            <label>Ataque</label>
             <input
               type="number"
               name="attack"
@@ -126,7 +123,7 @@ export const CreatePokemon = (props) => {
             />
           </p>
           <p className="question">
-            <label>defense</label>
+            <label>Defensa</label>
             <input
               type="number"
               name="defense"
@@ -135,7 +132,7 @@ export const CreatePokemon = (props) => {
             />
           </p>
           <p className="question">
-            <label>speed</label>
+            <label>Velocidad</label>
             <input
               type="number"
               name="speed"
@@ -144,7 +141,7 @@ export const CreatePokemon = (props) => {
             />
           </p>
           <p className="question">
-            <label>height</label>
+            <label>Altura</label>
             <input
               type="number"
               name="height"
@@ -153,7 +150,7 @@ export const CreatePokemon = (props) => {
             />
           </p>
           <p className="question">
-            <label>weigth</label>
+            <label>Peso</label>
             <input
               type="number"
               name="weigth"
@@ -163,7 +160,7 @@ export const CreatePokemon = (props) => {
           </p>
         </div>
 
-        <h1>types</h1>
+        <h1>Tipos</h1>
         <div className="types">
           {options?.map((t) => (
             <div key={t.slot}>

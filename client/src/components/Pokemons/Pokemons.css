@@ -1,0 +1,45 @@
+.select-order {
+     background: #191970;
+     border: none;
+     font-size: 14px;
+     height: 30px;
+     padding: 5px;
+     width: 250px;
+     color: white; 
+}
+
+.select-filter{
+    background: #8B0000;
+     border: none;
+     font-size: 14px;
+     height: 30px;
+     padding: 5px;
+     width: 250px;
+     color: white;
+}
+.create-by{
+    background:	#006400;
+     border: none;
+     font-size: 14px;
+     height: 30px;
+     padding: 5px;
+     width: 250px;
+     color: white;
+}
+
+.pagination {
+    display: inline-block;
+    position: center;
+}
+
+.pagination span {
+    color: white;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  .pagination span.active {
+    background-color: #0f23b7;
+    color: black;
+  }
+  .pagination span:hover:not(.active) {background-color: rgb(16, 15, 15);}
