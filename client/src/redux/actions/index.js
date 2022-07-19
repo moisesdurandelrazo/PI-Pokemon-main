@@ -1,3 +1,4 @@
+import { baseUrl } from "../../utils";
 export const GET_ALL_POKEMONS = "GET_ALL_POKEMONS";
 export const GET_POKEMON = "GET_POKEMON";
 export const GET_SINGLE_POKEMON = "GET_SINGLE_POKEMON";
@@ -9,9 +10,8 @@ export const ADD_FAVORITE = "ADD_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 
 // Usar ruta 'http://localhost:3001/pokemons' para buscar todas los pokemons en nuestro back
-
 export const getAllpokemons = () => (dispatch) => {
-  return fetch(`http://localhost:3001/pokemons`)
+  return fetch(`${baseUrl}/pokemons`)
     .then((response) => {
       return response.json();
     })
@@ -24,7 +24,7 @@ export const getAllpokemons = () => (dispatch) => {
 
 export const getpokemon = (name) => (dispatch) => {
   const sufix = name ? `?name=${name}` : "";
-  return fetch(`http://localhost:3001/pokemons${sufix}`)
+  return fetch(`${baseUrl}/pokemons${sufix}`)
     .then((response) => {
       return response.json();
     })
@@ -36,7 +36,7 @@ export const getpokemon = (name) => (dispatch) => {
 //Usar ruta par traer un pokemon http://localhost:3001/pokemons/id
 
 export const getSinglePokemon = (id) => (dispatch) => {
-  return fetch(`http://localhost:3001/pokemons/${id}`)
+  return fetch(`${baseUrl}/pokemons/${id}`)
     .then((response) => {
       return response.json();
     })
@@ -48,7 +48,7 @@ export const getSinglePokemon = (id) => (dispatch) => {
 //creacion de pokemons
 
 export const createPokemon = (pokemon) => (dispatch) => {
-  return fetch(`http://localhost:3001/pokemons`, {
+  return fetch(`${baseUrl}/pokemons`, {
     method: "POST",
     headers: { Accept: "applcation/json", "Content-Type": "application/json" },
     body: JSON.stringify(pokemon),
@@ -64,7 +64,7 @@ export const createPokemon = (pokemon) => (dispatch) => {
 // creacion de tipos
 
 export const getTypes = () => (dispatch) => {
-  return fetch(`http://localhost:3001/types`)
+  return fetch(`${baseUrl}/types`)
     .then((response) => {
       return response.json();
     })

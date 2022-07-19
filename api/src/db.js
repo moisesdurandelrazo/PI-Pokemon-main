@@ -2,16 +2,14 @@ const { Sequelize, DataTypes } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const { userInfo } = require("os");
-const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+const { NODE_ENV, DEV_POSTGRES_URL, PROD_POSTGRES_URL } = process.env;
 
-const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pokemon`,
-  {
-    logging: false, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-  }
-);
+const postgresUrl = NODE_ENV === "dev" ? DEV_POSTGRES_URL : PROD_POSTGRES_URL;
 
+const sequelize = new Sequelize(postgresUrl, {
+  logging: false, // set to console.log to see the raw SQL queries
+  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+});
 sequelize
   .authenticate()
   .then(() => {
