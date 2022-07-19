@@ -31,13 +31,12 @@ export const CreatePokemon = (props) => {
     if (!input.name) {
       errors.name = "El name es obligatorio";
     }
-
     return errors;
   };
 
   const [data, setData] = useState(initialValues);
 
-  // console.log({ data });
+  console.log({ data });
 
   const [errors, setErrors] = useState({});
 
@@ -63,7 +62,7 @@ export const CreatePokemon = (props) => {
   };
 
   const checkbox = (e) => {
-    console.log({ e });
+    // console.log({ e });
     if (data.types.includes(e.target.value)) {
       data.types = data.types.filter((id) => id !== e.target.value);
       setData({
@@ -163,7 +162,7 @@ export const CreatePokemon = (props) => {
         <h1>Tipos</h1>
         <div className="types">
           {options?.map((t) => (
-            <div key={t.slot}>
+            <table className="types-select" key={t.slot}>
               <input
                 type="checkbox"
                 name={t.name}
@@ -173,7 +172,7 @@ export const CreatePokemon = (props) => {
               />
               <label htmlFor={t.slot}>{t.name}</label>
               {t.slot % 4 === 0 ? <br /> : null}
-            </div>
+            </table>
           ))}
           <input type="submit" className="submit" />
         </div>
