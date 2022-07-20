@@ -7,8 +7,12 @@ const { ENV, DEV_POSTGRES_URL, DATABASE_URL } = process.env;
 const postgresUrl = ENV === "dev" ? DEV_POSTGRES_URL : DATABASE_URL;
 console.log({ env: process.env });
 const sequelize = new Sequelize(postgresUrl, {
-  logging: false, // set to console.log to see the raw SQL queries
-  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
 });
 sequelize
   .authenticate()
