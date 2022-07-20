@@ -104,7 +104,7 @@ pokemonRouter.get("/:id", async (req, res) => {
   }
   try {
     const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    console.log({ data });
+    // console.log({ data });
     const formattedPokemon = {
       id: data.id,
       name: data.name,
@@ -125,7 +125,7 @@ pokemonRouter.get("/:id", async (req, res) => {
 });
 pokemonRouter.post("/", async (req, res) => {
   const { name, hp, attack, defense, speed, height, weigth, types } = req.body;
-  console.log({ types });
+  // console.log({ types });
 
   if (
     !name ||

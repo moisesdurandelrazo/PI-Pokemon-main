@@ -36,7 +36,7 @@ export const CreatePokemon = (props) => {
 
   const [data, setData] = useState(initialValues);
 
-  console.log({ data });
+  // console.log({ data });
 
   const [errors, setErrors] = useState({});
 

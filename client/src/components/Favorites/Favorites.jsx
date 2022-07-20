@@ -7,7 +7,7 @@ const Favorites = () => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites);
 
-  console.log({ favorites });
+  // console.log({ favorites });
   return (
     <div>
       <h2>Pokemons Favoritos</h2>

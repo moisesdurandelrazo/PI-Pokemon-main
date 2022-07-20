@@ -19,25 +19,8 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
-const cors = require("cors");
 const port = process.env.PORT ? process.env.PORT : 3001;
-console.log({ port });
-
-const domainsFromEnv = process.env.CORS_DOMAINS || "";
-
-const whitelist = domainsFromEnv.split(",").map((item) => item.trim());
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-};
-server.use(cors(corsOptions));
+// console.log({ port });
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
