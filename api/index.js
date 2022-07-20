@@ -37,7 +37,7 @@ const corsOptions = {
   },
   credentials: true,
 };
-app.use(cors(corsOptions));
+server.use(cors(corsOptions));
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
