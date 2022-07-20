@@ -5,7 +5,7 @@ const { userInfo } = require("os");
 const { ENV, DEV_POSTGRES_URL, PROD_POSTGRES_URL } = process.env;
 
 const postgresUrl = ENV === "dev" ? DEV_POSTGRES_URL : PROD_POSTGRES_URL;
-
+console.log({ env: process.env });
 const sequelize = new Sequelize(postgresUrl, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed

@@ -19,7 +19,7 @@ describe("Pokemon routes", () => {
     Pokemon.sync({ force: true }).then(() => Pokemon.create(pokemon))
   );
   describe("GET/pokemons", () => {
-    it("should get 200", (done) => agent.get("/pokemons").expect(200));
+    it("should get 200", () => agent.get("/pokemons").expect(200));
   });
 });
 e;
