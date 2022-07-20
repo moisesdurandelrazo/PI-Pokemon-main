@@ -2,9 +2,9 @@ const { Sequelize, DataTypes } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const { userInfo } = require("os");
-const { NODE_ENV, DEV_POSTGRES_URL, PROD_POSTGRES_URL } = process.env;
+const { ENV, DEV_POSTGRES_URL, PROD_POSTGRES_URL } = process.env;
 
-const postgresUrl = NODE_ENV === "dev" ? DEV_POSTGRES_URL : PROD_POSTGRES_URL;
+const postgresUrl = ENV === "dev" ? DEV_POSTGRES_URL : PROD_POSTGRES_URL;
 
 const sequelize = new Sequelize(postgresUrl, {
   logging: false, // set to console.log to see the raw SQL queries
