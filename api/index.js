@@ -22,10 +22,6 @@ const { conn } = require("./src/db.js");
 const port = process.env.PORT ? process.env.PORT : 3001;
 console.log({ port });
 
-import cors from "cors";
-
-app.use(cors());
-
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(port, () => {
