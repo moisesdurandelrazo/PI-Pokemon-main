@@ -4,7 +4,7 @@ const path = require("path");
 const { userInfo } = require("os");
 const { ENV, DEV_POSTGRES_URL, DATABASE_URL } = process.env;
 
-const postgresUrl = DEV_POSTGRES_URL || DATABASE_URL;
+const postgresUrl = ENV === "dev" ? DEV_POSTGRES_URL : DATABASE_URL;
 console.log({ env: process.env });
 const sequelize = new Sequelize(postgresUrl, {
   logging: false, // set to console.log to see the raw SQL queries
