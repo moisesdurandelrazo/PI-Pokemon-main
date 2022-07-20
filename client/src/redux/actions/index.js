@@ -9,6 +9,8 @@ export const FILTER_TYPES = "FILTER_TYPES";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 
+console.log({ baseUrl });
+
 // Usar ruta 'http://localhost:3001/pokemons' para buscar todas los pokemons en nuestro back
 export const getAllpokemons = () => (dispatch) => {
   return fetch(`${baseUrl}/pokemons`)
