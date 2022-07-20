@@ -5,7 +5,7 @@ const { userInfo } = require("os");
 const { ENV, DEV_POSTGRES_URL, DATABASE_URL } = process.env;
 
 const postgresUrl = ENV === "dev" ? DEV_POSTGRES_URL : DATABASE_URL;
-console.log({ env: process.env });
+// console.log({ env: process.env });
 const sequelize = new Sequelize(postgresUrl, {
   dialectOptions: {
     ssl: {
