@@ -5,7 +5,7 @@
     position: relative;
     width: 350px;
     min-width: 200px;
-    height: 400px;
+    height: 500px;
     border-radius: 20px;
     overflow:hidden;
     box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.3);
@@ -22,7 +22,8 @@ h2{
 }
 .profile-img:hover {filter: saturate(180%);}
 
-.num, .type {
+
+.num,.type {
   color: black;
   text-align: left;
   display: inline;
@@ -50,4 +51,7 @@ h2{
 .btn:hover {filter: opacity(.5);}
   
 
-  
+.description {
+  position: absolute;
+  top: 280px;
+}

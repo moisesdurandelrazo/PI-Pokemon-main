@@ -36,7 +36,7 @@ export const CreatePokemon = (props) => {
 
   const [data, setData] = useState(initialValues);
 
-  // console.log({ data });
+  console.log({ data });
 
   const [errors, setErrors] = useState({});
 
@@ -86,6 +86,7 @@ export const CreatePokemon = (props) => {
       .forEach((e) => (e.checked = false));
   };
 
+  if (submit === true) return <h1>Pokemon Creado</h1>;
   return (
     <div className="create-pokemon-container">
       <form className="form" onSubmit={submit}>
@@ -162,7 +163,7 @@ export const CreatePokemon = (props) => {
         <h1>Tipos</h1>
         <div className="types">
           {options?.map((t) => (
-            <table className="types-select" key={t.slot}>
+            <span className="types-select" key={t.slot}>
               <input
                 type="checkbox"
                 name={t.name}
@@ -172,7 +173,7 @@ export const CreatePokemon = (props) => {
               />
               <label htmlFor={t.slot}>{t.name}</label>
               {t.slot % 4 === 0 ? <br /> : null}
-            </table>
+            </span>
           ))}
           <input type="submit" className="submit" />
         </div>
