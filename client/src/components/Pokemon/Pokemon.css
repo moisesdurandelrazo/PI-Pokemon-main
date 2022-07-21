@@ -55,3 +55,10 @@ h2{
   position: absolute;
   top: 280px;
 }
+
+.favorite {
+  position: absolute;
+  height:10%;
+  top: 350px;
+  right: 20px ;
+}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { addFav } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import "./Pokemon.css";
+import poke from "../../images/poke.png";
 
 const Pokemon = ({ name, img, types, id }) => {
   const dispatch = useDispatch();
@@ -36,10 +37,12 @@ const Pokemon = ({ name, img, types, id }) => {
           </div>
         </div>
       </Link>
-      {!isFavorite && (
+      {!isFavorite ? (
         <button className="btn" onClick={(e) => dispatch(addFav(id))}>
           Agregar a Favoritos
         </button>
+      ) : (
+        <img className="favorite" src={poke} />
       )}
     </div>
   );

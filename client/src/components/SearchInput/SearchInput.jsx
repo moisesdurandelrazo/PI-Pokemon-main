@@ -11,6 +11,7 @@ const SearchInput = ({ resetFilters }) => {
   return (
     <div className="topnav">
       <input
+        placeholder="Eje: pikachu..."
         className="input"
         value={name}
         onChange={(e) => setName(e.target.value)}

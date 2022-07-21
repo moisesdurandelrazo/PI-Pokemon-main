@@ -176,7 +176,7 @@ export const CreatePokemon = (props) => {
             </span>
           ))}
           ;
-          <input type="submit" className="submit" />
+          <input type="submit" className="submit" value="Crear Pokemon" />
         </div>
       </form>
     </div>

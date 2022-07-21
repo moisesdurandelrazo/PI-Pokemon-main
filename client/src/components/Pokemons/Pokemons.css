@@ -48,7 +48,10 @@
     border-radius: 5px;
     border-color: black;
   }
-
+  .pagination span.active {
+    background-color: #5909ec;
+    color: white;
+  }
 
   .pokemon {
     left: 4rem;
@@ -64,3 +67,4 @@
     font: oblique bold 180% cursive;
     
   }
+  
