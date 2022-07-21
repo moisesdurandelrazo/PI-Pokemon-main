@@ -13,7 +13,7 @@ export const PokemonsDetail = (props) => {
     dispatch(getSinglePokemon(params.id));
   }, []);
 
-  console.log({ pokemon });
+  // console.log({ pokemon });
 
   if (!pokemon) return <h2>Cargando</h2>;
 

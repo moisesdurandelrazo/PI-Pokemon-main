@@ -43,7 +43,7 @@ const getPokemonByName = async (pokemonName) => {
     const { data } = await axios.get(
       `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
     );
-    console.log({ data });
+    // console.log({ data });
     return [
       {
         id: data.id,
@@ -61,7 +61,7 @@ pokemonRouter.get("/", async (req, res) => {
   if (name) {
     try {
       const pokemon = await getPokemonByName(name.toLocaleLowerCase());
-      console.log({ pokemon });
+      // console.log({ pokemon });
       return res.json(200, pokemon);
     } catch (e) {
       return res.json(401, []);
@@ -84,7 +84,7 @@ pokemonRouter.get("/", async (req, res) => {
 
 pokemonRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
-  console.log({ isNan: isNaN(id), id });
+  // console.log({ isNan: isNaN(id), id });
   if (isNaN(id)) {
     const db = await Pokemon.findOne({
       where: {

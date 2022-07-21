@@ -29,14 +29,14 @@ export const CreatePokemon = (props) => {
   const validate = (input) => {
     let errors = {};
     if (!input.name) {
-      errors.name = "El name es obligatorio";
+      errors.name = "El nombre es obligatorio";
     }
     return errors;
   };
 
   const [data, setData] = useState(initialValues);
 
-  console.log({ data });
+  // console.log({ data });
 
   const [errors, setErrors] = useState({});
 
@@ -80,13 +80,13 @@ export const CreatePokemon = (props) => {
   const submit = async (e) => {
     e.preventDefault();
     dispatch(createPokemon(data));
+    alert("POKEMON CREADO");
     setData(initialValues);
     document
       .querySelectorAll("input[type=checkbox]")
       .forEach((e) => (e.checked = false));
   };
 
-  if (submit === true) return <h1>Pokemon Creado</h1>;
   return (
     <div className="create-pokemon-container">
       <form className="form" onSubmit={submit}>
@@ -175,6 +175,7 @@ export const CreatePokemon = (props) => {
               {t.slot % 4 === 0 ? <br /> : null}
             </span>
           ))}
+          ;
           <input type="submit" className="submit" />
         </div>
       </form>

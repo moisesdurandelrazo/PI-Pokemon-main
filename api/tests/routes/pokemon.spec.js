@@ -18,8 +18,20 @@ describe("Pokemon routes", () => {
   beforeEach(() =>
     Pokemon.sync({ force: true }).then(() => Pokemon.create(pokemon))
   );
-  describe("GET/pokemons", () => {
-    it("should get 200", () => agent.get("/pokemons").expect(200));
+  describe("GET /pokemons", () => {
+    it("should get 200", () =>
+      agent
+        .get("/pokemons")
+        .expect(200)
+        .then(() => done(new Error("It requires a valid name")))
+        .catch(() => done()));
+  });
+  describe("GET /type", () => {
+    it("should get 200", () =>
+      agent
+        .get("/type")
+        .expect(200)
+        .then(() => new Error("Error with types"))
+        .catch(() => done()));
   });
 });
-e;
