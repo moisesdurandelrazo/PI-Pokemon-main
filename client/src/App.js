@@ -10,15 +10,17 @@ import Favorites from "./components/Favorites";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Nav />
-      <Switch>
-        <Route exact path="/" component={PokeHome} />
-        <Route exact path="/pokemons" component={Pokemons} />
-        <Route path="/pokemons/:id" component={PokemonsDetail} />
-        <Route exact path="/create" component={CreatePokemon} />
-        <Route path="/favorites" component={Favorites} />
-      </Switch>
+      <div className="App">
+        <Switch>
+          <Route exact path="/" component={PokeHome} />
+          <Route exact path="/pokemons" component={Pokemons} />
+          <Route path="/pokemons/:id" component={PokemonsDetail} />
+          <Route exact path="/create" component={CreatePokemon} />
+          <Route path="/favorites" component={Favorites} />
+        </Switch>
+      </div>
     </div>
   );
 }

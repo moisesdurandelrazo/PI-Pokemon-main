@@ -1,10 +1,10 @@
 body {
-    color: whitesmoke;
     background-image: url("../../newtwo.jpg");
     background-image: no-repeat;
-    background-size: 95rem;
+    background-size: cover;
     background-position-x: center;
     background-position-y:3px ;
+    
     
   }
   
@@ -12,6 +12,11 @@ body {
     letter-spacing: 0.25em;
     text-transform: uppercase;
     font-weight: 600;
+    color: aliceblue;
+  }
+  .description {
+    color: black;
+    margin-top: -60px;
   }
   
   .l-content {

@@ -69,7 +69,7 @@ export const Pokemons = (props) => {
   return (
     <div className="all-selects">
       <SearchInput resetFilters={resetFilters} />
-      <h1>Atrapa tu Pokemon</h1>
+      <h1 className="introduction">Encuentra tus pokemons!</h1>
       <div className="all-selects">
         <select
           value={sort}
@@ -122,8 +122,9 @@ export const Pokemons = (props) => {
       </div>
 
       {currentPokemons.filter(handleFilters).map((pokemon) => (
-        <Pokemon {...pokemon} key={pokemon.name} />
+        <Pokemon className="pokemon" {...pokemon} key={pokemon.name} />
       ))}
+
       <div className="pagination">
         {pageNumbers.map((pageNum, index) => (
           <span

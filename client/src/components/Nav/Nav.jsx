@@ -9,11 +9,11 @@ const Nav = () => {
         <ul>
           <li>
             <Link className="active" to="/">
-              Home
+              inicio
             </Link>
             <Link to="/Pokemons">Pokemons</Link>
-            <Link to="/create">Create Pokemon</Link>
-            <Link to="/favorites">Favorites</Link>
+            <Link to="/create">Crea tu pokemon</Link>
+            <Link to="/favorites">Pokemons Favoritos</Link>
           </li>
         </ul>
       </nav>

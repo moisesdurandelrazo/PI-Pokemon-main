@@ -1,3 +1,8 @@
+.all-selects{
+  background: linear-gradient(0deg , white,  rgb(163, 153, 163)
+  );
+  
+}
 .select-order {
      background: #191970;
      border: none;
@@ -28,18 +33,34 @@
 }
 
 .pagination {
-    display: inline-block;
-    position: center;
+    text-align: center;
 }
 
 .pagination span {
-    color: white;
-    float: left;
+    color: rgb(16, 15, 15);
+    float: center;
     padding: 8px 16px;
     text-decoration: none;
+    border-radius: 5px;
   }
-  .pagination span.active {
-    background-color: #0f23b7;
-    color: black;
+  .pagination span:hover:not(.active) {
+    background-color: rgb(82, 77, 77);
+    border-radius: 5px;
+    border-color: black;
   }
-  .pagination span:hover:not(.active) {background-color: rgb(16, 15, 15);}
+
+
+  .pokemon {
+    left: 4rem;
+    right: 4rem;
+    position: relative;
+    justify-content: center;
+    align-content: center;
+    width: 350px;
+    height: 400px;
+  }
+  .introduction {
+    color: rgb(26, 26, 24);
+    font: oblique bold 180% cursive;
+    
+  }
