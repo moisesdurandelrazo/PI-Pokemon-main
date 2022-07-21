@@ -4,9 +4,25 @@
 
   }
   
+  .title {
+    color: yellow;
+    text-shadow: 5px;
+    border: 5px;
+    border-color: black;
+  }
   
   *, *:before, *:after {
     box-sizing: inherit;
+  }
+
+  .container{
+    background-color: white;
+    width: 300px;
+    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    line-height: 3px;
+    top: 300px;
+    position: relative;
   }
   
   .about-section {
@@ -14,8 +30,16 @@
     text-align: center;
     background-image: url("./back.jpg");
     background-image: no-repeat;
-    background-size: 95rem;
+    background-size: cover;
     background-position-x: center;
-    background-position-y:center ;    
-    color: black;    
+    background-position-y:center ;  
+    height: 80rem;    
+  }
+
+  .image {
+    position: absolute;
+    height: 300px;
+    justify-content: center;
+    width: auto;
+    
   }

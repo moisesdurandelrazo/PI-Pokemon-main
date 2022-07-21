@@ -19,39 +19,38 @@ export const PokemonsDetail = (props) => {
 
   return (
     <div className="about-section">
-      <h1>Detalle</h1>
-      <div className="image">
-        <img src={pokemon.img} alt={pokemon.id} />
-      </div>
-      <h3>Nombre:</h3>
-      <p>{pokemon.name}</p>
-      <h3>Id</h3>
-      <p>{pokemon.id}</p>
-      <h3>Tipos</h3>
-      <div>
+      <h1 className="title">Detalle de pokemon</h1>
+      <img className="image" src={pokemon.img} alt={pokemon.id} />
+      <div className="container">
+        <h3>Nombre:</h3>
+        <p>{pokemon.name}</p>
+        <h3>Id</h3>
+        <p>{pokemon.id}</p>
+        <h3>Tipos</h3>
         {pokemon.types &&
           pokemon.types.map((type) => {
-            return <div key={type.id}>{type.name}</div>;
+            return <p key={type.id}>{type.name}</p>;
           })}
         <h3>Peso</h3>
         <p>{pokemon.weigth / 10} Kg</p>
         <h3>Altura</h3>
         <p>{pokemon.height / 10} m</p>
-        <h3>Estadisticas</h3>
-      </div>
-      <div className="stats-container">
-        <p>
-          <b>vida: </b> {pokemon.hp}
-        </p>
-        <p>
-          <b>Ataque: </b> {pokemon.attack}
-        </p>
-        <p>
-          <b>Defensa: </b> {pokemon.defense}
-        </p>
-        <p>
-          <b>Velocidad: </b> {pokemon.speed}
-        </p>
+        <div className="stats-container">
+          <h3>Estadisticas</h3>
+
+          <p>
+            <b>Vida: </b> {pokemon.hp}
+          </p>
+          <p>
+            <b>Ataque: </b> {pokemon.attack}
+          </p>
+          <p>
+            <b>Defensa: </b> {pokemon.defense}
+          </p>
+          <p>
+            <b>Velocidad: </b> {pokemon.speed}
+          </p>
+        </div>
       </div>
     </div>
   );
