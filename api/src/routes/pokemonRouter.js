@@ -10,12 +10,16 @@ const getFullPokemons = (incompletePokemons) => {
     incompletePokemons.map(async (pokemon) => {
       const { data } = await axios.get(pokemon.url);
       console.log({ t: JSON.stringify(data.types, null, 2) });
+      console.log({ m: JSON.stringify(data.moves, null, 2) });
+      console.log({ stats: data.stats });
       return {
         id: data.id,
         name: data.name,
-        img: data.sprites.front_default,
+        img: data.sprites.versions["generation-v"]["black-white"].animated
+          .front_default,
         attack: data.stats[1].base_stat,
         types: data.types.map((t, idx) => ({ id: idx, name: t.type.name })),
+        moves: data.moves.map((m) => ({ name: m.move.name })),
       };
     })
   );
@@ -49,7 +53,9 @@ const getPokemonByName = async (pokemonName) => {
         id: data.id,
         name: data.name,
         type: data.types.map((t, idx) => ({ id: idx, name: t.type.name })),
-        img: data.sprites.front_default,
+        img: data.sprites.versions["generation-v"]["black-white"].animated
+          .front_default,
+        moves: data.moves.map((m) => ({ name: m.move.name })),
       },
     ];
   }
@@ -61,7 +67,7 @@ pokemonRouter.get("/", async (req, res) => {
   if (name) {
     try {
       const pokemon = await getPokemonByName(name.toLocaleLowerCase());
-      // console.log({ pokemon });
+      console.log({ pokemon });
       return res.json(200, pokemon);
     } catch (e) {
       return res.json(401, []);
@@ -104,13 +110,13 @@ pokemonRouter.get("/:id", async (req, res) => {
   }
   try {
     const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    // console.log({ data });
+    console.log({ data });
     const formattedPokemon = {
       id: data.id,
       name: data.name,
       types: data.types.map((t, idx) => ({ id: idx, name: t.type.name })),
-      img: data.sprites.versions["generation-v"]["black-white"].animated
-        .front_default,
+      moves: data.moves.map((m) => ({ name: m.move.name })),
+      img: data.sprites.other["official-artwork"].front_default,
       hp: data.stats[0].base_stat,
       attack: data.stats[1].base_stat,
       defense: data.stats[2].base_stat,

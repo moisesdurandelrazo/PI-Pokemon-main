@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSinglePokemon } from "../../redux/actions";
 import "./PokemonDetail.css";
 
-export const PokemonsDetail = (props) => {
+export const PokemonsDetail = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const pokemon = useSelector((state) => state.pokemon);
+  console.log({ pokemon });
 
   useEffect(() => {
     dispatch(getSinglePokemon(params.id));
@@ -30,6 +31,11 @@ export const PokemonsDetail = (props) => {
         {pokemon.types &&
           pokemon.types.map((type) => {
             return <p key={type.id}>{type.name}</p>;
+          })}
+        <h3>Moves</h3>
+        {pokemon.moves &&
+          pokemon.moves.map((m) => {
+            return <p key={m.name}>{m.name}</p>;
           })}
         <h3>Peso</h3>
         <p>{pokemon.weigth / 10} Kg</p>

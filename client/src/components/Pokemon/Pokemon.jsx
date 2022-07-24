@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Pokemon.css";
 import poke from "../../images/poke.png";
 
-const Pokemon = ({ name, img, types, id }) => {
+const Pokemon = ({ name, img, types, id, moves }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites);
-  // console.log({ favorites });
+  console.log({ moves });
   const isFavorite = favorites.some((p) => {
     return p.id === id;
   });
@@ -42,7 +42,7 @@ const Pokemon = ({ name, img, types, id }) => {
           Agregar a Favoritos
         </button>
       ) : (
-        <img className="favorite" src={poke} />
+        <img className="favorite" src={poke} alt="" />
       )}
     </div>
   );
