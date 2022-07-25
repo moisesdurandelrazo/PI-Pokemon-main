@@ -1,14 +1,8 @@
-.body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-
-  }
   
   .title {
-    color: yellow;
-    text-shadow: 5px;
-    border: 5px;
-    border-color: black;
+    font-family: sans-serif;
+  color: black;
+  -webkit-text-stroke: 2px rgb(227, 227, 20);
   }
   
 
@@ -31,8 +25,9 @@
     background-size: cover;
     background-position-x: center;
     background-position-y:center ;
-    width: 80rem;  
-    height: 100rem;   
+    min-width: 85rem;  
+    height: 85rem;   
+    margin: 0;
     
   }
 
@@ -42,8 +37,6 @@
     justify-content: center;
     width: auto;
   }
-
- 
 
 
   @media (max-width:700px) {
