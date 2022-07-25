@@ -26,13 +26,13 @@ export const PokemonsDetail = () => {
         <h3>Nombre:</h3>
         <p>{pokemon.name}</p>
         <h3>Id</h3>
-        <p>{pokemon.id}</p>
+        <p>{pokemon.id.toString().padStart(3, "0")}</p>
         <h3>Tipos</h3>
         {pokemon.types &&
           pokemon.types.map((type) => {
             return <p key={type.id}>{type.name}</p>;
           })}
-        <h3>Movimientos</h3>
+        <h3 className="moves">Movimientos</h3>
         {pokemon.moves &&
           pokemon.moves.map((m) => {
             return <p key={m.name}>{m.name}</p>;

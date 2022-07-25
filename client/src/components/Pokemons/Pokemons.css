@@ -1,9 +1,10 @@
 .all-selects{
   background: linear-gradient(0deg , white,  rgb(163, 153, 163)
-  ); 
+  );
+  min-width: 80rem;
 }
 .select-order {
-     background: #191970;
+     background: #3c3c3f;
      border: none;
      font-size: 14px;
      max-height: 3rem;
@@ -13,7 +14,7 @@
 }
 
 .select-filter{
-    background: #8B0000;
+    background: #3c3c3f;
      border: none;
      font-size: 14px;
      max-height: 3rem;
@@ -22,7 +23,7 @@
      color: white;
 }
 .create-by{
-    background:	#006400;
+    background:	#3c3c3f;
      border: none;
      font-size: 14px;
      max-height: 3rem;

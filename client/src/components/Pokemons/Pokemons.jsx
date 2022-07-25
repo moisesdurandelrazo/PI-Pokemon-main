@@ -80,7 +80,7 @@ export const Pokemons = (props) => {
             dispatch(sortPokemon(e.target.value));
           }}
         >
-          <option value="0">Seleccione una opcion</option>
+          <option value="0">Ordenar por:</option>
           <option value="A-Z">Ordenar A-Z</option>
           <option value="Z-A">Ordenar Z-A</option>
           <option value="attack+">Ordenar MAYOR ATAQUE</option>
