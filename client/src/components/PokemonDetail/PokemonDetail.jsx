@@ -32,7 +32,7 @@ export const PokemonsDetail = () => {
           pokemon.types.map((type) => {
             return <p key={type.id}>{type.name}</p>;
           })}
-        <h3>Moves</h3>
+        <h3>Movimientos</h3>
         {pokemon.moves &&
           pokemon.moves.map((m) => {
             return <p key={m.name}>{m.name}</p>;

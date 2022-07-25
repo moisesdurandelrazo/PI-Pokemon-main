@@ -3,13 +3,14 @@
   background-image: linear-gradient(0deg , #130947, #daefdf);
     display: inline-block;
     position: relative;
-    width: 350px;
-    min-width: 200px;
-    height: 500px;
+    max-width: 40rem;
+    min-width: 20rem;
+    min-height: 28rem;
     border-radius: 20px;
     overflow:hidden;
     box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.3);
     margin: 30px;
+    place-items: center;
 }
 h2{
   color: black;
@@ -66,4 +67,105 @@ h2{
   height:10%;
   top: 350px;
   right: 20px ;
+}
+
+.grass {
+  background-color: 	rgb(120,200,80) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.normal{
+  background-color: 		rgb(168,160,144) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.fighting{
+  background-color: 			rgb(160,80,56) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.flying{
+  background-color: 				#BAAAFF ;
+  min-height: 8px;
+  width: fit-content;
+}
+.poison{
+  background-color: 			rgb(176,88,160) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.ground{
+  background-color: 			rgb(234,214,164) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.rock{
+  background-color: 			rgb(184,160,88) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.bug{
+  background-color: 			rgb(168,184,32) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.ghost{
+  background-color: 			rgb(96,96,176) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.steel{
+  background-color: 			rgb(168,168,192) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.fire{
+  background-color: 			rgb(240,80,48) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.water{
+  background-color: 			rgb(56,153,248) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.electric{
+  background-color: 			rgb(248,208,48) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.psychic{
+  background-color: 			rgb(248,112,160) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.ice{
+  background-color: 			rgb(88,200,224) ;
+  min-height: 8px;
+  width: fit-content;
+}
+.dragon{
+  background-color: 			#AB82FF ;
+  min-height: 8px;
+  width: fit-content;
+}
+.dark{
+  background-color: 			#A9A9A9 ;
+  min-height: 8px;
+  width: fit-content;
+}
+.fairy{
+  background-color: 			#FFB0FF ;
+  min-height: 8px;
+  width: fit-content;
+}
+.unknown{
+  background-color: transparent ;
+  min-height: 8px;
+  width: fit-content;
+}
+.shadow{
+  background-color: 			#A9A9A9 ;
+  min-height: 8px;
+  width: fit-content;
 }

@@ -1,13 +1,14 @@
 header {
   position: fixed;
-  width: 100%;
+  min-width: 100%;
   top: 0;
   left: 0;
+
 }
 ul {
     list-style-type: none;
     margin: 0;
-    padding: 0;
+    padding: 3px;
     overflow: hidden;
     background-image: url("../../navimg.jpeg");   
     background-repeat: no-repeat;
@@ -43,4 +44,46 @@ ul {
     background-color: #2b2b30;
   }
 
-  
+  @media (max-width:700px){
+    header {
+      top: 0;
+      left: 0;
+      max-width:fit-content;
+    
+    }
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 1px;
+      background-image: url("../../navimg.jpeg");   
+      background-repeat: no-repeat;
+      background-position:center;
+      background-color:rgb(0, 0, 0);
+      max-height: 9rem;
+      
+    }
+
+    li {
+      float: center;
+      border-right:1px solid rgb(248, 236, 236);
+    }
+    li:last-child {
+    border-right: none;
+  }
+    
+    li a {
+      display: block;
+      color:white;
+      text-align: center;
+      padding: 10px 10px;
+    }
+    
+    li a:hover:not(.active) {
+      background-color: white;
+      color: #2b2b30;
+    }
+    
+    .active {
+      background-color: #2b2b30;
+    }
+  }

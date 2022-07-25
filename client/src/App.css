@@ -1,7 +1,21 @@
-.App {
+.app-main{
+  max-width:cover;
+  
+}
+
+.App{
+  max-width:max-content;
+} 
+
+/* .app {
    box-sizing: border-box;  
+   place-items: center;
 }
 
 .App input{
   padding: 6px;
 }
+
+.container {
+  padding: 0 1em;
+} */

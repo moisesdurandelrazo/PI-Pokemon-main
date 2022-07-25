@@ -11,9 +11,7 @@
     border-color: black;
   }
   
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
+
 
   .container{
     background-color: white;
@@ -32,8 +30,10 @@
     background-image: no-repeat;
     background-size: cover;
     background-position-x: center;
-    background-position-y:center ;  
-    height: 80rem;    
+    background-position-y:center ;
+    width: 80rem;  
+    height: 100rem;   
+    
   }
 
   .image {
@@ -41,5 +41,35 @@
     height: 300px;
     justify-content: center;
     width: auto;
+  }
+
+ 
+
+
+  @media (max-width:700px) {
+
+    .about-section{
+      position:relative;
+      top: 150px;
+      max-width: 20rem;
+      margin: 0;
+      left: -80px;
+    }
+    .container {
+      position: relative;
+      max-height: auto;
+      top: -10px;
+
+    }
+    
+
+    .image {
+      position: relative;
+      max-height: 200px;
+      justify-content: center;
+      width: auto;
+      
+    }
+  
     
   }

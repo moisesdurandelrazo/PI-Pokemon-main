@@ -5,7 +5,7 @@ import logo from "../../Pokémon-emblema.jpg";
 
 export const PokeHome = () => {
   return (
-    <div>
+    <div className="principal">
       <h1>Encuentra tus pokemons!</h1>
       <h2 className="description">
         Podras ver sus ataques, fuerza, vida, entre otras cosas..

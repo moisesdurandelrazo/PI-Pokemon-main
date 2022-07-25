@@ -10,7 +10,7 @@ import Favorites from "./components/Favorites";
 
 function App() {
   return (
-    <div>
+    <div className="app-main">
       <Nav />
       <div className="App">
         <Switch>

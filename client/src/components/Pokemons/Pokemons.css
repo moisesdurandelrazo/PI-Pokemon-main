@@ -1,15 +1,14 @@
 .all-selects{
   background: linear-gradient(0deg , white,  rgb(163, 153, 163)
-  );
-  
+  ); 
 }
 .select-order {
      background: #191970;
      border: none;
      font-size: 14px;
-     height: 30px;
+     max-height: 3rem;
      padding: 5px;
-     width: 250px;
+     max-width: 25rem;
      color: white; 
 }
 
@@ -17,18 +16,18 @@
     background: #8B0000;
      border: none;
      font-size: 14px;
-     height: 30px;
+     max-height: 3rem;
      padding: 5px;
-     width: 250px;
+     max-width: 25rem;
      color: white;
 }
 .create-by{
     background:	#006400;
      border: none;
      font-size: 14px;
-     height: 30px;
+     max-height: 3rem;
      padding: 5px;
-     width: 250px;
+     max-width: 25rem;
      color: white;
 }
 
@@ -54,17 +53,36 @@
   }
 
   .pokemon {
-    left: 4rem;
-    right: 4rem;
+    left: 3rem;
+    right: 3rem;
     position: relative;
     justify-content: center;
     align-content: center;
-    width: 350px;
-    height: 400px;
+    max-width: 35rem;
+    max-height: 40rem;
   }
   .introduction {
     color: rgb(26, 26, 24);
     font: oblique bold 180% cursive;
     
   }
+@media (max-width:700px) {
+  .pokemon {
+    position: relative;
+    max-width: 15rem;
+    max-height: auto;
+    justify-content: center;
+    top: 180px;
+    left: -1px;
+  }
+  .all-selects{
+    background: linear-gradient(0deg , white,  rgb(163, 153, 163)
+    ); 
+    position: absolute;
+    top: 180px;
+    max-width: 500px;
+    left: -2px;
+
   
+  }
+}

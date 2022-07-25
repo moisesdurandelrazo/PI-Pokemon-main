@@ -25,13 +25,17 @@ const Pokemon = ({ name, img, types, id, moves }) => {
           alt={id}
         />
         <div className="description">
-          <h3 className="num">No.{id.toString().padStart(3, "0")}</h3>
+          <h3 className="num">No.° {id.toString().padStart(3, "0")}</h3>
           <div className="type">
             <h4>
               Tipo:
               {types &&
                 types.map((t) => {
-                  return <p key={`${name}-${t.name}`}>{t.name}</p>;
+                  return (
+                    <p className={t.name} key={`${name}-${t.name}`}>
+                      {t.name}
+                    </p>
+                  );
                 })}
             </h4>
           </div>
