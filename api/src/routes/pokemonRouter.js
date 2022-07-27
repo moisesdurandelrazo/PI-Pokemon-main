@@ -80,7 +80,7 @@ pokemonRouter.get("/", async (req, res) => {
 
   try {
     const { data } = await axios.get(
-      "https://pokeapi.co/api/v2/pokemon?limit=40"
+      "https://pokeapi.co/api/v2/pokemon?limit=200"
     );
     const apiPokemons = await getFullPokemons(data.results);
     const combinedPokemons = [...dbPokemons, ...apiPokemons];

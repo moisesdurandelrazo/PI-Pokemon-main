@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { getAllpokemons, sortPokemon, getTypes } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Pokemon from "../Pokemon";
@@ -48,6 +48,7 @@ export const Pokemons = (props) => {
     setSort(0);
     setTypeFilter(0);
     setSourceFilter(0);
+    setCurrentPage(1);
   };
 
   const handleFilters = (pokemon) => {
