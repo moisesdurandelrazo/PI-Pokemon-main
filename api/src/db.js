@@ -1,3 +1,5 @@
+/** @format */
+
 const { Sequelize, DataTypes } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
@@ -8,13 +10,11 @@ const postgresUrl = ENV === "dev" ? DEV_POSTGRES_URL : DATABASE_URL;
 // console.log({ env: process.env });
 
 const sequelize = new Sequelize(postgresUrl, {
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
-  },
+  dialect: "postgres",
+  protocol: "postgres",
+  dialectOptions: {}, //removed ssl
 });
+
 sequelize
   .authenticate()
   .then(() => {

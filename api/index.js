@@ -1,3 +1,5 @@
+/** @format */
+
 //                       _oo0oo_
 //                      o8888888o
 //                      88" . "88
@@ -20,7 +22,7 @@
 const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
 const port = process.env.PORT ? process.env.PORT : 3001;
-// console.log({ port });
+console.log({ port });
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
