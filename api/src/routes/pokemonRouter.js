@@ -9,9 +9,9 @@ const getFullPokemons = (incompletePokemons) => {
   return Promise.all(
     incompletePokemons.map(async (pokemon) => {
       const { data } = await axios.get(pokemon.url);
-      // console.log({ t: JSON.stringify(data.types, null, 2) });
-      // console.log({ m: JSON.stringify(data.moves, null, 2) });
-      // console.log({ stats: data.stats });
+      console.log({ t: JSON.stringify(data.types, null, 2) });
+      console.log({ m: JSON.stringify(data.moves, null, 2) });
+      console.log({ stats: data.stats });
       return {
         id: data.id,
         name: data.name,
@@ -20,7 +20,6 @@ const getFullPokemons = (incompletePokemons) => {
         attack: data.stats[1].base_stat,
         types: data.types.map((t, idx) => ({ id: idx, name: t.type.name })),
         moves: data.moves.map((m) => ({ name: m.move.name })),
-        base_experience: data.base_experience,
       };
     })
   );
@@ -57,7 +56,6 @@ const getPokemonByName = async (pokemonName) => {
         img: data.sprites.versions["generation-v"]["black-white"].animated
           .front_default,
         moves: data.moves.map((m) => ({ name: m.move.name })),
-        base_experience: data.base_experience,
       },
     ];
   }
@@ -125,8 +123,6 @@ pokemonRouter.get("/:id", async (req, res) => {
       speed: data.stats[5].base_stat,
       height: data.height,
       weigth: data.weight,
-      base_experience: data.base_experience,
-      abilities: data.abilities.map((a) => ({ name: a.ability.name })),
     };
     return res.json(201, formattedPokemon);
   } catch (e) {
