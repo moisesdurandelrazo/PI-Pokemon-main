@@ -1,5 +1,5 @@
 
-import "./App.css";
+
 import { Routes, Route } from "react-router-dom";
 import Pokemons from "./components/Pokemons";
 import PokemonsDetail from "./components/PokemonDetail";

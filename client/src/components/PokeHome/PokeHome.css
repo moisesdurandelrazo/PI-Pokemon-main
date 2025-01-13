@@ -1,47 +1,41 @@
 body {
-    background-image: url("../../newtwo.jpg");
-    background-image: no-repeat;
-    background-size: cover;
-    background-position-x: center;
-    background-position-y:3px ;
-    
-    
-  }
-  
-  h1, h2 {
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: aliceblue;
-  }
-  .description {
-    color: white;
-    margin-top: 0;
-  }
-  
-  .l-content {
-    margin: 0 auto;
-  }
-   
-  .pure-menu-link {
-    padding: 0.5em 0.7em;
-    
-  }
-  
-  .button-choose {
-   
-    color: rgb(225, 222, 5);
-    border-radius: 5em;
-    font-weight: normal;
-    position: relative;
-    bottom: -12em; 
-  }
+  background-image: url("../../assets/newtwo.jpg");
+  background-image: no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: 3px;
+}
 
-  .img-logo {
-    max-width: 100px;
-    max-height: 100px;
-    border-radius: 10rem;
-    
-  }
+h1,
+h2 {
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: aliceblue;
+}
+.description {
+  color: white;
+  margin-top: 0;
+}
 
-  
+.l-content {
+  margin: 0 auto;
+}
+
+.pure-menu-link {
+  padding: 0.5em 0.7em;
+}
+
+.button-choose {
+  color: rgb(225, 222, 5);
+  border-radius: 5em;
+  font-weight: normal;
+  position: relative;
+  bottom: -12em;
+}
+
+.img-logo {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 10rem;
+}
