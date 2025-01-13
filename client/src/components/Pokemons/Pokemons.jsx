@@ -1,70 +1,79 @@
-import React, { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { getAllpokemons, sortPokemon, getTypes } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Pokemon from "../Pokemon";
 import SearchInput from "../SearchInput";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 import "./Pokemons.css";
+import Grid from "@mui/material/Grid";
 
 const perPage = 12;
 
-export const Pokemons = (props) => {
+export const Pokemons = () => {
   const dispatch = useDispatch();
-  const pokemons = useSelector((state) => state.pokemons);
-  const types = useSelector((store) => store.types);
+
+  // Redux states
+  const pokemons = useSelector((state) => state.pokemons || []);
+  const totalPokemons = useSelector((state) => state.totalPokemons || 0);
+  const types = useSelector((state) => state.types || []);
+
+  // Local states
   const [sort, setSort] = useState("0");
   const [typeFilter, setTypeFilter] = useState("0");
   const [sourceFilter, setSourceFilter] = useState("0");
-  const [currentPage, setCurrentPage] = useState("1");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const indexOfLastPost = currentPage * perPage;
-  const indexOfFirstPost = indexOfLastPost - perPage;
+  // Fetch Pokémon data when the page changes
+  useEffect(() => {
+    dispatch(getAllpokemons(currentPage, perPage));
+  }, [dispatch, currentPage]);
 
-  // console.log({ pokemons });
-  const setPage = (pageNum) => {
-    setCurrentPage({ currentPage: pageNum });
-  };
+  // Fetch types if not already fetched
+  useEffect(() => {
+    if (!types || types.length === 0) {
+      dispatch(getTypes());
+    }
+  }, [dispatch, types]);
 
-  React.useEffect(() => {
-    dispatch(getAllpokemons());
-  }, []);
-
-  React.useEffect(() => {
-    if (!types) dispatch(getTypes());
-  }, []);
-
+  // Loading state
   if (!pokemons) return <h2>Buscando pokemons...</h2>;
 
-  const currentPokemons = pokemons.slice(indexOfFirstPost, indexOfLastPost);
+  // Filter Pokémon by type and source
+  const handleFilters = (pokemon) => {
+    let valid = true;
 
-  const pageNumbers = [];
+    if (typeFilter && typeFilter !== "0") {
+      const pokemonTypeNames = pokemon?.types.map((typeInfo) => typeInfo.name);
+      valid = pokemonTypeNames.includes(typeFilter);
+    }
 
-  for (let i = 1; i <= Math.ceil(pokemons.length / perPage); i++) {
-    pageNumbers.push(i);
-  }
+    if (sourceFilter === "DB") {
+      valid = valid && isNaN(pokemon.id);
+    }
 
-  // console.log({ currentPokemons });
+    if (sourceFilter === "API") {
+      valid = valid && !isNaN(pokemon.id);
+    }
 
+    return valid;
+  };
+
+  // Apply filters to Pokémon
+  const filteredPokemons = pokemons.filter(handleFilters);
+
+  // Generate pagination numbers based on totalPokemons
+
+  // Reset filters
   const resetFilters = () => {
-    setSort(0);
-    setTypeFilter(0);
-    setSourceFilter(0);
+    setSort("0");
+    setTypeFilter("0");
+    setSourceFilter("0");
     setCurrentPage(1);
   };
 
-  const handleFilters = (pokemon) => {
-    if (typeFilter && typeFilter !== "0") {
-      const pokemonTypeNames = pokemon?.types.map((typesInfo) => {
-        return typesInfo.name;
-      });
-      return pokemonTypeNames.includes(typeFilter);
-    }
-    if (sourceFilter === "DB") {
-      return isNaN(pokemon.id);
-    }
-    if (sourceFilter === "API") {
-      return !isNaN(pokemon.id);
-    }
-    return pokemon;
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -76,7 +85,6 @@ export const Pokemons = (props) => {
           value={sort}
           className="select-order"
           onChange={(e) => {
-            resetFilters();
             setSort(e.target.value);
             dispatch(sortPokemon(e.target.value));
           }}
@@ -84,37 +92,28 @@ export const Pokemons = (props) => {
           <option value="0">Ordenar por:</option>
           <option value="A-Z">Ordenar A-Z</option>
           <option value="Z-A">Ordenar Z-A</option>
-          <option value="attack+">Ordenar MAYOR ATAQUE</option>
-          <option value="attack-">Ordenar MENOR ATAQUE</option>
+          <option value="attack+">Mayor Ataque</option>
+          <option value="attack-">Menor Ataque</option>
         </select>
 
         <select
           value={typeFilter}
           className="select-filter"
-          onChange={(e) => {
-            resetFilters();
-            setTypeFilter(e.target.value);
-            // dispatch(typesFilters(e.target.value));
-          }}
+          onChange={(e) => setTypeFilter(e.target.value)}
         >
           <option value="0">Tipos</option>
-          {types &&
-            types.map((t) => {
-              return (
-                <option value={t.name} key={t.slot}>
-                  {t.name}
-                </option>
-              );
-            })}
+          {Array.isArray(types) &&
+            types.map((type) => (
+              <option value={type.name} key={type.name}>
+                {type.name}
+              </option>
+            ))}
         </select>
 
         <select
           value={sourceFilter}
           className="create-by"
-          onChange={(e) => {
-            resetFilters();
-            setSourceFilter(e.target.value);
-          }}
+          onChange={(e) => setSourceFilter(e.target.value)}
         >
           <option value="0">Creado en:</option>
           <option value="API">API</option>
@@ -122,23 +121,38 @@ export const Pokemons = (props) => {
         </select>
       </div>
 
-      {currentPokemons.filter(handleFilters).map((pokemon) => (
-        <Pokemon className="pokemon" {...pokemon} key={pokemon.name} />
-      ))}
-
-      <div className="pagination">
-        {pageNumbers.map((pageNum, index) => (
-          <span
-            key={index}
-            className={pageNum === currentPage ? "active" : ""}
-            onClick={() => {
-              setCurrentPage(pageNum);
-            }}
-          >
-            {pageNum}
-          </span>
-        ))}
+      <div className="pokemon-list">
+        <Grid container spacing={3} justifyContent="center">
+          {filteredPokemons.map((pokemon) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={pokemon.id}>
+              <Pokemon {...pokemon} key={pokemon.id} />
+            </Grid>
+          ))}
+        </Grid>
       </div>
+
+      <Stack spacing={2} className="pagination-container">
+        <Pagination
+          count={Math.ceil(totalPokemons / perPage)}
+          page={currentPage}
+          onChange={handlePageChange}
+          variant="outlined"
+          color="primary"
+          showFirstButton
+          showLastButton
+          sx={{
+            "& .MuiPaginationItem-root": {
+              color: "white", // Cambia el color del texto
+              backgroundColor: "transparent", // Elimina fondo negro
+              border: "1px solid white", // Bordes blancos
+            },
+            "& .Mui-selected": {
+              backgroundColor: "#3f51b5", // Color de selección
+              color: "white",
+            },
+          }}
+        />
+      </Stack>
     </div>
   );
 };

@@ -1,6 +1,6 @@
-import React from "react";
+
 import "./App.css";
-import { Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Pokemons from "./components/Pokemons";
 import PokemonsDetail from "./components/PokemonDetail";
 import CreatePokemon from "./components/CreatePokemon/CreatePokemon";
@@ -13,13 +13,13 @@ function App() {
     <div className="app-main">
       <Nav />
       <div className="App">
-        <Switch>
-          <Route exact path="/" component={PokeHome} />
-          <Route exact path="/pokemons" component={Pokemons} />
-          <Route path="/pokemons/:id" component={PokemonsDetail} />
-          <Route exact path="/create" component={CreatePokemon} />
-          <Route path="/favorites" component={Favorites} />
-        </Switch>
+        <Routes>
+          <Route exact path="/" element={<PokeHome/>} />
+          <Route exact path="/pokemons" element={<Pokemons/>} />
+          <Route path="/pokemons/:id" element={<PokemonsDetail/>} />
+          <Route exact path="/create" element={<CreatePokemon/>} />
+          <Route path="/favorites" element={<Favorites/>} />
+        </Routes>
       </div>
     </div>
   );

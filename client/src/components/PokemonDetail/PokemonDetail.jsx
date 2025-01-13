@@ -3,6 +3,15 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSinglePokemon } from "../../redux/actions";
 import "./PokemonDetail.css";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Grid,
+  Chip,
+  Box,
+} from "@mui/material";
 
 export const PokemonsDetail = () => {
   const params = useParams();
@@ -18,7 +27,7 @@ export const PokemonsDetail = () => {
   if (!pokemon) return <h2>Cargando</h2>;
 
   return (
-    <div className="about-section">
+    <Box sx={{ padding: "20px" }} className="about-section">
       <h1 className="title">
         {pokemon.name} N.°{pokemon.id.toString().padStart(3, "0")}
       </h1>
@@ -36,8 +45,8 @@ export const PokemonsDetail = () => {
         <h3>Altura</h3>
         <p>{pokemon.height / 10} m</p>
         <h3>Abilidades:</h3>
-        {pokemon.abilities &&
-          pokemon.abilities.map((ability) => {
+        {pokemon.moves &&
+          pokemon.moves.slice(0, 15).map((ability) => {
             return (
               <p key={ability.name}>{String(ability.name).toUpperCase()}</p>
             );
@@ -59,7 +68,7 @@ export const PokemonsDetail = () => {
           </p>
         </div>
       </div>
-    </div>
+    </Box>
   );
 };
 

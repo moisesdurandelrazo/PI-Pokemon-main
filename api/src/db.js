@@ -9,10 +9,12 @@ const postgresUrl = ENV === "dev" ? DEV_POSTGRES_URL : DATABASE_URL;
 
 const sequelize = new Sequelize(postgresUrl, {
   dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
+    dialect: 'postgres',
+    ssl:false,
+    // ssl: {
+    //   require: false,
+    //   rejectUnauthorized: false,
+    // },
   },
 });
 sequelize

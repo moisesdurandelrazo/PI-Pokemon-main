@@ -1,7 +1,6 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import "./PokeHome.css";
-import logo from "../../Pokémon-emblema.jpg";
+import logo from "../../assets/Pokémon-emblema.jpg"
 
 export const PokeHome = () => {
   return (

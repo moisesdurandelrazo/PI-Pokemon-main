@@ -61,32 +61,76 @@ const getPokemonByName = async (pokemonName) => {
   }
 };
 
+// pokemonRouter.get("/", async (req, res) => {
+//   const { name,currentcurrentPage, perPage} = req.query;
+
+//   if (name) {
+//     try {
+//       const pokemon = await getPokemonByName(name.toLocaleLowerCase());
+//       console.log({ pokemon });
+//       return res.json(200, pokemon);
+//     } catch (e) {
+//       return res.json(401, []);
+//     }
+//   }
+
+  
+
+//   try {
+//     const dbPokemons = await Pokemon.findAll({ include: Type });
+//     const { data } = await axios.get(
+//       "https://pokeapi.co/api/v2/pokemon?limit=200"
+//     );
+//     const apiPokemons = await getFullPokemons(data.results);
+//     const combinedPokemons = [...dbPokemons, ...apiPokemons];
+//     const startIndex = (currentPage - 1) * perPage;
+//     const endIndex = currentPage * perPage;
+//     const paginatedPokemons = combinedPokemons.slice(startIndex, endIndex);
+
+//     return res.status(200).json({
+//       total: combinedPokemons.length,
+//       page: parseInt(currentPage),
+//       limit: parseInt(perPage),
+//       data: paginatedPokemons,});
+    
+//   } catch (e) {
+//     return res.status(500).json( { msg: "hubo un error" });
+//   }
+// });
+
+
 pokemonRouter.get("/", async (req, res) => {
-  const { name } = req.query;
+  const { currentPage = 1, perPage = 12 } = req.query;
 
-  if (name) {
-    try {
-      const pokemon = await getPokemonByName(name.toLocaleLowerCase());
-      console.log({ pokemon });
-      return res.json(200, pokemon);
-    } catch (e) {
-      return res.json(401, []);
-    }
-  }
-
-  const dbPokemons = await Pokemon.findAll({ include: Type });
+  const offset = (currentPage - 1) * perPage; 
 
   try {
+    const dbPokemons = await Pokemon.findAll({
+  
+      perPage: Number(perPage),
+      offset: Number(offset),
+    });
+
     const { data } = await axios.get(
-      "https://pokeapi.co/api/v2/pokemon?limit=200"
+      `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${perPage}`
     );
+
     const apiPokemons = await getFullPokemons(data.results);
+
+   
     const combinedPokemons = [...dbPokemons, ...apiPokemons];
-    return res.json(200, combinedPokemons);
+
+    const totalPokemons = 1302; 
+    return res.status(200).json({
+      total: totalPokemons,
+      data: combinedPokemons});
   } catch (e) {
-    return res.json(401, { msg: "hubo un error" });
+    console.error(e);
+    return res.status(500).json({ msg: "Error al obtener los Pokémon" });
   }
 });
+
+
 
 pokemonRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
