@@ -1,68 +1,67 @@
-input[type=text], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid rgb(18, 17, 17);
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  input[type=submit] {
-    width: 100%;
-    background-color: #4c59af;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  input[type=submit]:hover {
-    background-color: #4588a0;
-  }
-  
-  div {
-    border-radius: 5px;
-    padding: 20px;
-  }
-  .types {
-  position: absolute;
-  font-size: 20px;
-  }
-  label {
-    color: white;
-  }
-
-  @media (max-width:700px) {
-.create-pokemon-container{
-  position: relative;
-  top:90px;
-  background-color: rgb(21, 16, 16);
-  color: black;
-
+input[type="text"],
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid rgb(18, 17, 17);
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
+input[type="submit"] {
+  width: 100%;
+  background-color: #4c59af;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #4588a0;
+}
+
+div {
+  border-radius: 5px;
+  padding: 20px;
+}
 .types {
-  position: relative;
-  max-width: 300px;
-  background-color: black;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  font-size: 20px;
+}
+label {
+  color: white;
+}
+
+@media (max-width: 700px) {
+  .create-pokemon-container {
+    position: relative;
+    top: 90px;
+    background-color: rgb(21, 16, 16);
+    color: black;
   }
 
-  .types-select{
+  .types {
+    position: relative;
+    max-width: 300px;
+    background-color: black;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .types-select {
     display: block;
   }
-  .submit{
+  .submit {
     position: relative;
     align-items: center;
     left: -1.2rem;
-
   }
 
-    /* .pokemon {
+  /* .pokemon {
       position: relative;
       max-width: 15rem;
       max-height: auto;
@@ -80,5 +79,4 @@ input[type=text], select {
   
     
     } */
-  }
-
+}

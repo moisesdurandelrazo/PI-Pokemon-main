@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Box, Typography, Button } from "@mui/material";
-import logo from "../../assets/newtwo.jpg";
+import logo from "../../assets/hq720.jpg";
 
 const fontFamily = "'Press Start 2P', cursive";
 

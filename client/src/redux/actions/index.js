@@ -39,11 +39,12 @@ export const getAllpokemons = (currentPage, perPage) => async (dispatch) => {
 // };
 
 export const getpokemon = (name) => async (dispatch) => {
+  console.log({aquinoes:name})
   try {
     const response = await axios.get(`${baseUrl}/pokemons`, {
       params: { name },
     });
-    dispatch({ type: GET_ALL_POKEMONS, payload: response.data });
+    dispatch({ type: GET_POKEMON, payload: response.data });
   } catch (error) {
     console.error("Error en getpokemon:", error.message);
   }

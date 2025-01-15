@@ -7,6 +7,7 @@ import CreatePokemon from "./components/CreatePokemon/CreatePokemon";
 import PokeHome from "./components/PokeHome";
 import Nav from "./components/Nav/Nav";
 import Favorites from "./components/Favorites";
+import "./App.css"
 
 function App() {
   return (

@@ -32,9 +32,12 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case GET_POKEMON:
+      console.log({a: action.payload})
       return {
+        
         ...state,
-        pokemon: action.payload,
+        pokemons: action.payload.data,
+        totalPokemons: action.payload.total,
       };
     case GET_SINGLE_POKEMON:
       return {

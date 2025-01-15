@@ -43,16 +43,21 @@ export const Pokemons = () => {
   const handleFilters = (pokemon) => {
     let valid = true;
 
+    const pokemonTypes =
+    pokemon.types || 
+    (Array.isArray(pokemon.type) ? pokemon.type : []);
+
     if (typeFilter && typeFilter !== "0") {
-      const pokemonTypeNames = pokemon?.types.map((typeInfo) => typeInfo.name);
-      valid = pokemonTypeNames.includes(typeFilter);
-    }
+    const pokemonTypeNames = pokemonTypes.map((typeInfo) => typeInfo.name);
+    valid = pokemonTypeNames.includes(typeFilter);
+  }
 
     if (sourceFilter === "DB") {
       valid = valid && isNaN(pokemon.id);
     }
 
     if (sourceFilter === "API") {
+      console.log(valid)
       valid = valid && !isNaN(pokemon.id);
     }
 
