@@ -26,13 +26,13 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         pokemons: [...action.payload.data],
-        totalPokemons: action.payload.total, 
+        totalPokemons: 1025, 
 
 
       };
 
     case GET_POKEMON:
-      console.log({a: action.payload})
+
       return {
         
         ...state,
