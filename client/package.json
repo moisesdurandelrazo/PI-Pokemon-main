@@ -39,5 +39,8 @@
     "ajv@6": {
       "uri-js": "npm:fast-uri@4.2.3"
     }
+  },
+  "engines": {
+    "node": "26.x"
   }
 }
