@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseUrl } from "../../utils";
+import { authApi } from "../../auth/store";
 export const GET_ALL_POKEMONS = "GET_ALL_POKEMONS";
 export const GET_POKEMON = "GET_POKEMON";
 export const GET_SINGLE_POKEMON = "GET_SINGLE_POKEMON";
@@ -73,29 +74,10 @@ export const getSinglePokemon = (id) => async (dispatch) => {
 
 //creacion de pokemons
 
-// export const createPokemon = (pokemon) => (dispatch) => {
-//   return fetch(`${baseUrl}/pokemons`, {
-//     method: "POST",
-//     headers: { Accept: "applcation/json", "Content-Type": "application/json" },
-//     body: JSON.stringify(pokemon),
-//   })
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((json) => {
-//       dispatch({ type: CREATE_POKEMON, payload: pokemon });
-//     });
-// };
-
 export const createPokemon = (pokemon) => async (dispatch) => {
-  try {
-    const response = await axios.post(`${baseUrl}/pokemons`, pokemon, {
-      headers: { "Content-Type": "application/json" },
-    });
-    dispatch({ type: CREATE_POKEMON, payload: response.data });
-  } catch (error) {
-    console.error("Error en createPokemon:", error.message);
-  }
+  const created = await authApi.createPokemon(pokemon);
+  dispatch({ type: CREATE_POKEMON, payload: created });
+  return created;
 };
 
 // creacion de tipos

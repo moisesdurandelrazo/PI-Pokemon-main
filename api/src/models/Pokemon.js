@@ -20,6 +20,7 @@ module.exports = (sequelize) => {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
+      attack: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
       defense: {
         type: DataTypes.INTEGER,
       },

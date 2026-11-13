@@ -12,6 +12,13 @@ require("./db.js");
 const server = express();
 
 server.name = "API";
+server.disable("x-powered-by");
+server.use((req, res, next) => {
+  res.set("X-Content-Type-Options", "nosniff");
+  res.set("Referrer-Policy", "no-referrer");
+  next();
+});
+server.use(require("./security").rateLimit(120, 60 * 1000));
 const allowedOrigins = [
   process.env.CLIENT_URL_DEV,
   process.env.CLIENT_URL_PROD,
@@ -22,28 +29,28 @@ const corsOptions = {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error("No permitido por CORS"));
+      callback(Object.assign(new Error("No permitido por CORS"), { status: 403 }));
     }
   },
   credentials: true,
   methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
-  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-CSRF-Token"],
 };
-server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-server.use(bodyParser.json({ limit: "50mb" }));
+server.use(bodyParser.urlencoded({ extended: false, limit: "16kb" }));
+server.use(bodyParser.json({ limit: "16kb" }));
 server.use(cookieParser());
 server.use(morgan("dev"));
 server.use(cors(corsOptions));
 
+server.use("/auth", require("./auth").router);
 server.use("/", routes);
 
 // Error catching endware.
 server.use((err, req, res, next) => {
   // eslint-disable-line no-unused-vars
-  const status = err.status || 500;
-  const message = err.message || err;
-  console.error(err);
-  res.status(status).send(message);
+  const status = Number.isInteger(err.status) && err.status >= 400 && err.status <= 599 ? err.status : 500;
+  if (status >= 500) console.error("Error interno de API", err.name);
+  res.status(status).json({ msg: status >= 500 ? "Error interno del servidor" : "Solicitud rechazada" });
 });
 
 module.exports = server;

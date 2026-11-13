@@ -1,186 +1,65 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { createPokemon, getTypes } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { authStore } from "../../auth/store";
 import "./CreatePokemon.css";
 
-// import { getPokemons } from "../../actions";
-// import style from "./form.module.css";
+const initialValues = { name: "", hp: "", attack: "", defense: "", speed: "", height: "", weigth: "", types: [] };
+const fields = [["hp", "Vida"], ["attack", "Ataque"], ["defense", "Defensa"], ["speed", "Velocidad"], ["height", "Altura"], ["weigth", "Peso"]];
 
-const initialValues = {
-  name: "",
-  hp: "",
-  attack: "",
-  defense: "",
-  speed: "",
-  height: "",
-  weigth: "",
-  types: [],
-};
-
-export const CreatePokemon = (props) => {
+export default function CreatePokemon() {
   const dispatch = useDispatch();
-
-  const options = useSelector((store) => store.types);
-  //   // UseEffect que haga dispatch de getTypes
-  useEffect(() => {
-    dispatch(getTypes());
-  }, [dispatch]);
-
-  const validate = (input) => {
-    let errors = {};
-    if (!input.name) {
-      errors.name = "El nombre es obligatorio";
-    }
-    return errors;
-  };
-
+  const options = useSelector(store => store.types);
   const [data, setData] = useState(initialValues);
-
-  // console.log({ data });
-
-  const [errors, setErrors] = useState({});
-
-  const handleInputChange = (e) => {
-    if (e.target.name !== "name") {
-      setData({
-        ...data,
-        [e.target.name]:
-          Number(e.target.value) <= 0 ? 0 : Number(e.target.value),
-      });
-    } else {
-      setErrors(
-        validate({
-          ...data,
-          [e.target.name]: e.target.value,
-        })
-      );
-      setData({
-        ...data,
-        [e.target.name]: e.target.value,
-      });
-    }
-  };
-
-  const checkbox = (e) => {
-    // console.log({ e });
-    if (data.types.includes(e.target.value)) {
-      data.types = data.types.filter((id) => id !== e.target.value);
-      setData({
-        ...data,
-        types: data.types,
-      });
-    } else {
-      setData({
-        ...data,
-        types: [...data.types, e.target.name],
-      });
-    }
-  };
-
-  const submit = async (e) => {
-    e.preventDefault();
-    dispatch(createPokemon(data));
-    alert("POKEMON CREADO");
-    setData(initialValues);
-    document
-      .querySelectorAll("input[type=checkbox]")
-      .forEach((e) => (e.checked = false));
-  };
-
-  return (
-    <div className="create-pokemon-container">
-      <form className="form" onSubmit={submit}>
-        <div className="">
-          <h1>Crea tu propio Pokemon</h1>
-          <p className={errors.name ? "danger" : "question"}>
-            <label>Nombre del pokemon</label>
-            <input
-              type="text"
-              placeholder="pikachu.."
-              name="name"
-              value={data.name}
-              onChange={handleInputChange}
-              required
-            />
-          </p>
-          {errors.name ? <p className="danger">{errors.username}</p> : null}
-          <p className="question">
-            <label>Vida</label>
-            <input
-              type="number"
-              name="hp"
-              value={data.hp}
-              onChange={handleInputChange}
-            />
-          </p>
-          <p className="question">
-            <label>Ataque</label>
-            <input
-              type="number"
-              name="attack"
-              value={data.attack}
-              onChange={handleInputChange}
-            />
-          </p>
-          <p className="question">
-            <label>Defensa</label>
-            <input
-              type="number"
-              name="defense"
-              value={data.defense}
-              onChange={handleInputChange}
-            />
-          </p>
-          <p className="question">
-            <label>Velocidad</label>
-            <input
-              type="number"
-              name="speed"
-              value={data.speed}
-              onChange={handleInputChange}
-            />
-          </p>
-          <p className="question">
-            <label>Altura</label>
-            <input
-              type="number"
-              name="height"
-              value={data.height}
-              onChange={handleInputChange}
-            />
-          </p>
-          <p className="question">
-            <label>Peso</label>
-            <input
-              type="number"
-              name="weigth"
-              value={data.weigth}
-              onChange={handleInputChange}
-            />
-          </p>
-        </div>
-
-        <h1>Tipos</h1>
-        <div className="types">
-          {options?.map((t) => (
-            <span className="types-select" key={t.slot}>
-              <input
-                type="checkbox"
-                name={t.name}
-                value={t.slot}
-                id={t.slot}
-                onChange={checkbox}
-              />
-              <label htmlFor={t.slot}>{t.name}</label>
-              {t.slot % 4 === 0 ? <br /> : null}
-            </span>
-          ))}
-          ;
-          <input type="submit" className="submit" value="Crear Pokemon" />
-        </div>
-      </form>
-    </div>
-  );
-};
-
-export default CreatePokemon;
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [pending, setPending] = useState(false);
+  useEffect(() => { dispatch(getTypes()); }, [dispatch]);
+  function change(event) {
+    const { name, value } = event.target;
+    setData(previous => ({ ...previous, [name]: value }));
+  }
+  function toggle(type) {
+    setData(previous => ({ ...previous, types: previous.types.includes(type)
+      ? previous.types.filter(value => value !== type) : [...previous.types, type] }));
+  }
+  async function submit(event) {
+    event.preventDefault();
+    if (pending) return;
+    setError(""); setSuccess("");
+    if (!data.types.length || data.types.length > 2) { setError("Selecciona uno o dos tipos."); return; }
+    const values = { ...data, name: data.name.trim() };
+    for (const [field] of fields) values[field] = Number(data[field]);
+    setPending(true);
+    try {
+      await dispatch(createPokemon(values));
+      setSuccess("Pokémon creado correctamente.");
+      setData(initialValues);
+    } catch (failure) {
+      if (failure.status === 401) authStore.signedOut();
+      setError(failure.message || "No se pudo crear el Pokémon.");
+    } finally { setPending(false); }
+  }
+  return <div className="create-pokemon-container">
+    <form className="form" onSubmit={submit}>
+      <h1>Crea tu propio Pokemon</h1>
+      <p className="question"><label htmlFor="pokemon-name">Nombre del pokemon</label>
+        <input id="pokemon-name" type="text" name="name" value={data.name} onChange={change} pattern="[a-zA-Z0-9-]{1,80}" maxLength={80} required disabled={pending} />
+      </p>
+      {fields.map(([field, label]) => <p className="question" key={field}>
+        <label htmlFor={`pokemon-${field}`}>{label}</label>
+        <input id={`pokemon-${field}`} type="number" name={field} value={data[field]} onChange={change} min={0} max={100000} step={1} required disabled={pending} />
+      </p>)}
+      <h2>Tipos (máximo 2)</h2>
+      <div className="types">
+        {options?.map(type => <span className="types-select" key={type.slot}>
+          <input type="checkbox" id={`type-${type.slot}`} checked={data.types.includes(type.name)} onChange={() => toggle(type.name)} disabled={pending || (!data.types.includes(type.name) && data.types.length >= 2)} />
+          <label htmlFor={`type-${type.slot}`}>{type.name}</label>
+        </span>)}
+        {error && <p role="alert">{error}</p>}
+        {success && <p role="status">{success}</p>}
+        <input type="submit" className="submit" value={pending ? "Creando…" : "Crear Pokemon"} disabled={pending} />
+      </div>
+    </form>
+  </div>;
+}

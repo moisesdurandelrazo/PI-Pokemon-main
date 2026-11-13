@@ -4,11 +4,17 @@ const { Router } = require("express");
 const { Pokemon, Type } = require("../db.js");
 
 const pokemonRouter = Router();
+const { pagination, pokemonInput } = require("../security");
+const { wrap, trustedWrite, requireSession, requireCsrf } = require("../auth");
+const { conn } = require("../db");
+const upstream = axios.create({ timeout: 10000, maxContentLength: 2 * 1024 * 1024, maxRedirects: 0 });
 
 const getFullPokemons = (incompletePokemons) => {
   return Promise.all(
     incompletePokemons.map(async (pokemon) => {
-      const { data } = await axios.get(pokemon.url);
+      const url = new URL(pokemon.url);
+      if (url.origin !== "https://pokeapi.co" || !/^\/api\/v2\/pokemon\/\d+\/?$/.test(url.pathname) || url.search || url.username || url.password) throw new Error("URL de proveedor inválida");
+      const { data } = await upstream.get(url.href);
       console.log({ t: JSON.stringify(data.types, null, 2) });
       console.log({ m: JSON.stringify(data.moves, null, 2) });
       console.log({ stats: data.stats });
@@ -44,7 +50,7 @@ const getPokemonByName = async (pokemonName) => {
       },
     ];
   } else {
-    const { data } = await axios.get(
+    const { data } = await upstream.get(
       `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
     );
     // console.log({ data });
@@ -78,7 +84,7 @@ const getPokemonByName = async (pokemonName) => {
 
 //   try {
 //     const dbPokemons = await Pokemon.findAll({ include: Type });
-//     const { data } = await axios.get(
+//     const { data } = await upstream.get(
 //       "https://pokeapi.co/api/v2/pokemon?limit=200"
 //     );
 //     const apiPokemons = await getFullPokemons(data.results);
@@ -100,18 +106,18 @@ const getPokemonByName = async (pokemonName) => {
 
 
 pokemonRouter.get("/", async (req, res) => {
-  const { currentPage = 1, perPage = 12 } = req.query;
-
-  const offset = (currentPage - 1) * perPage; 
+  const paging = pagination(req.query);
+  if (!paging) return res.status(400).json({ msg: "Paginación inválida (máximo 50 por página)" });
+  const { perPage, offset } = paging; 
 
   try {
     const dbPokemons = await Pokemon.findAll({
   
-      perPage: Number(perPage),
+      limit: Number(perPage),
       offset: Number(offset),
     });
 
-    const { data } = await axios.get(
+    const { data } = await upstream.get(
       `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${perPage}`
     );
 
@@ -132,8 +138,9 @@ pokemonRouter.get("/", async (req, res) => {
 
 
 
-pokemonRouter.get("/:id", async (req, res) => {
+pokemonRouter.get("/:id", wrap(async (req, res) => {
   const { id } = req.params;
+  if (!/^(?:[1-9]\d{0,4}|[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12})$/i.test(id)) return res.status(400).json({ msg: "Identificador inválido" });
   // console.log({ isNan: isNaN(id), id });
   if (isNaN(id)) {
     const db = await Pokemon.findOne({
@@ -144,16 +151,16 @@ pokemonRouter.get("/:id", async (req, res) => {
     });
 
     if (db) {
-      return res.json(200, [
+      return res.status(200).json([
         {
-          ...db,
+          ...db.toJSON(),
           img: "https://media.giphy.com/media/DRfu7BT8ZK1uo/giphy.gif",
         },
       ]);
     }
   }
   try {
-    const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const { data } = await upstream.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
     console.log({ data });
     const formattedPokemon = {
       id: data.id,
@@ -168,42 +175,26 @@ pokemonRouter.get("/:id", async (req, res) => {
       height: data.height,
       weigth: data.weight,
     };
-    return res.json(201, formattedPokemon);
+    return res.status(200).json(formattedPokemon);
   } catch (e) {
-    return res.json(401, { msg: "Pokemon no encontrado" });
+    return res.status(404).json({ msg: "Pokemon no encontrado" });
   }
-});
-pokemonRouter.post("/", async (req, res) => {
-  const { name, hp, attack, defense, speed, height, weigth, types } = req.body;
-  // console.log({ types });
-
-  if (
-    !name ||
-    !hp ||
-    !attack ||
-    !defense ||
-    !speed ||
-    !height ||
-    !weigth ||
-    !types
-  )
-    return res.status(404).send("Falta enviar datos obligatorios");
-
-  const existe = await Pokemon.findOne({ where: { name: name } });
-  if (existe) return res.json({ info: "El pokemon ya existe" });
-  await Pokemon.findAll({ include: Type });
+}));
+pokemonRouter.post("/", trustedWrite, requireSession, requireCsrf, wrap(async (req, res) => {
+  const input = pokemonInput(req.body);
+  if (!input) return res.status(400).json({ msg: "Datos del Pokémon inválidos" });
   try {
-    const pokemon = await Pokemon.create(req.body); //, { include: Type }
-
-    let allTypes = await Type.findAll({
-      where: { name: types },
+    const result = await conn.transaction(async transaction => {
+      const types = await Type.findAll({ where: { name: input.types }, transaction });
+      if (types.length !== input.types.length) throw Object.assign(new Error("Tipos inválidos"), { status: 400 });
+      const pokemon = await Pokemon.create(input.values, { transaction });
+      await pokemon.addTypes(types, { transaction });
+      return pokemon;
     });
-    pokemon.addTypes(allTypes);
-
-    res.status(201).json(pokemon);
-  } catch (e) {
-    res.status(404).send(e);
+    return res.status(201).json(result);
+  } catch (error) {
+    if (error.name === "SequelizeUniqueConstraintError") return res.status(409).json({ msg: "El Pokémon ya existe" });
+    throw error;
   }
-});
-
+}));
 module.exports = pokemonRouter;
