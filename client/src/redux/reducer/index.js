@@ -22,11 +22,11 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_POKEMONS:
-      
+
       return {
         ...state,
         pokemons: [...action.payload.data],
-        totalPokemons: 1025, 
+        totalPokemons: action.payload.total ?? action.payload.data.length,
 
 
       };
@@ -34,7 +34,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_POKEMON:
 
       return {
-        
+
         ...state,
         pokemons: action.payload.data,
         totalPokemons: action.payload.total,

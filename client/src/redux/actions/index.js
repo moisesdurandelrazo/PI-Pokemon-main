@@ -20,6 +20,7 @@ export const getAllpokemons = (currentPage, perPage) => async (dispatch) => {
       params: { currentPage, perPage },
     });
     dispatch({ type: GET_ALL_POKEMONS, payload: data });
+    return data;
   } catch (error) {
     console.error("Error en getAllpokemons:", error.message);
   }

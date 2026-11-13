@@ -1,35 +1,45 @@
-
-
-import { Routes, Route } from "react-router-dom";
-import Pokemons from "./components/Pokemons";
-import PokemonsDetail from "./components/PokemonDetail";
-import CreatePokemon from "./components/CreatePokemon/CreatePokemon";
-import PokeHome from "./components/PokeHome";
+import { lazy, Suspense } from "react";
+import { Box, CircularProgress, CssBaseline, ThemeProvider, Typography } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
+import theme from "./theme";
 import Nav from "./components/Nav/Nav";
-import Favorites from "./components/Favorites";
-import Auth from "./components/Auth/Auth";
 import RequireAuth from "./components/Auth/RequireAuth";
-import "./App.css"
+import "./App.css";
 
-function App() {
+const Pokemons = lazy(() => import("./components/Pokemons"));
+const PokemonsDetail = lazy(() => import("./components/PokemonDetail"));
+const CreatePokemon = lazy(() => import("./components/CreatePokemon/CreatePokemon"));
+const PokeHome = lazy(() => import("./components/PokeHome"));
+const Favorites = lazy(() => import("./components/Favorites"));
+const Auth = lazy(() => import("./components/Auth/Auth"));
+
+export default function App() {
   return (
-    <div className="app-main">
-      <Nav />
-      <div className="App">
-        <Routes>
-          <Route exact path="/" element={<PokeHome/>} />
-          <Route exact path="/pokemons" element={<Pokemons/>} />
-          <Route path="/pokemons/:id" element={<PokemonsDetail/>} />
-          <Route path="/login" element={<Auth />} />
-          <Route path="/register" element={<Auth />} />
-          <Route element={<RequireAuth />}>
-            <Route path="/create" element={<CreatePokemon />} />
-          </Route>
-          <Route path="/favorites" element={<Favorites/>} />
-        </Routes>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className="app-main">
+        <Nav />
+        <div className="App">
+          <Suspense fallback={
+            <Box role="status" sx={{ py: 7, textAlign: "center" }}>
+              <CircularProgress size={28} />
+              <Typography color="text.secondary" mt={2}>Cargando página…</Typography>
+            </Box>
+          }>
+            <Routes>
+              <Route path="/" element={<PokeHome />} />
+              <Route path="/pokemons" element={<Pokemons />} />
+              <Route path="/pokemons/:id" element={<PokemonsDetail />} />
+              <Route path="/login" element={<Auth />} />
+              <Route path="/register" element={<Auth />} />
+              <Route element={<RequireAuth />}>
+                <Route path="/create" element={<CreatePokemon />} />
+              </Route>
+              <Route path="/favorites" element={<Favorites />} />
+            </Routes>
+          </Suspense>
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
-
-export default App;

@@ -1,77 +1,17 @@
 import { useState } from "react";
-import { getpokemon } from "../../redux/actions/index";
-import { useDispatch } from "react-redux";
+import { Box, Button, Stack, TextField } from "@mui/material";
 import PropTypes from "prop-types";
-import { Box, Button, TextField, Typography } from "@mui/material";
-import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
-import InputAdornment from "@mui/material/InputAdornment";
+import SearchRounded from "@mui/icons-material/SearchRounded";
 
-const SearchInput = ({ resetFilters }) => {
-  const [name, setName] = useState("");
-  const dispatch = useDispatch();
-  const [error, setError] = useState(false);
-
-  const handleSearch = () => {
-    if (!name.trim()) {
-      setError(true);
-      return;
-    }
-    setError(false);
-    resetFilters();
-    dispatch(getpokemon(name.trim()));
-    setName("");
-  };
-
+export default function SearchInput({ onSearch }) {
+  const [value, setValue] = useState("");
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" gap={2} >
-      <TextField
-        id="input-with-icon-textfield"
-        slotProps={{
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <CatchingPokemonIcon sx={{ transform: "rotate(90deg)" }}  />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <CatchingPokemonIcon sx={{ transform: "rotate(-90deg)" }}  />
-              </InputAdornment>
-            ),
-          },
-        }}
-        variant="standard"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        error={error}
-        helperText={error ? "Por favor ingresa un nombre válido." : ""}
-        sx={{
-          width: "100%",
-          maxWidth: "400px",
-        }}
-      />
-      <Button
-        variant="contained"
-        onClick={handleSearch}
-        startIcon={<CatchingPokemonIcon sx={{ transform: "rotate(180deg)" }}  />}
-        sx={{
-          backgroundColor: "#E3350D",
-          color: "white",
-          "&:hover": {
-            backgroundColor: "#B32A0A",
-          },
-          textTransform: "none",
-          fontSize: "16px",
-        }}
-      >
-       Busca tu Pokémon
-      </Button>
+    <Box component="form" onSubmit={event => { event.preventDefault(); onSearch(value.trim()); }}>
+      <Stack direction="row" spacing={1.5} alignItems="flex-start">
+        <TextField slotProps={{ inputLabel: { shrink: true } }} id="dex-search" label="Nombre o número" type="search" placeholder="¿Qué Pokémon estás buscando?" value={value} onChange={event => { setValue(event.target.value); if (!event.target.value) onSearch(""); }} helperText="Busca entre los Pokémon de esta página." sx={{ "& .MuiInputLabel-root": { color: "#fff" }, "& .MuiInputLabel-root.Mui-focused": { color: "#fff" }, "& .MuiFormHelperText-root": { color: "#d0d3cf" }, "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9aa39a" } }} />
+        <Button type="submit" variant="contained" color="secondary" aria-label="Buscar Pokémon" sx={{ minWidth: 48, px: 1 }}><SearchRounded /></Button>
+      </Stack>
     </Box>
   );
-};
-
-SearchInput.propTypes = {
-  resetFilters: PropTypes.func.isRequired,
-};
-
-export default SearchInput;
+}
+SearchInput.propTypes = { onSearch: PropTypes.func.isRequired };
