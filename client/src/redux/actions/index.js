@@ -1,3 +1,4 @@
+import { normalizePokemonPage } from "./pagination.mjs";
 import axios from "axios";
 import { baseUrl } from "../../utils";
 import { authApi } from "../../auth/store";
@@ -14,15 +15,18 @@ export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 // console.log({ baseUrl });
 
 // Usar ruta 'http://localhost:3001/pokemons' para buscar todas los pokemons en nuestro back
-export const getAllpokemons = (currentPage, perPage) => async (dispatch) => {
+export const getAllpokemons = (currentPage, perPage, { signal } = {}) => async (dispatch) => {
   try {
     const {data} = await axios.get(`${baseUrl}/pokemons`, {
       params: { currentPage, perPage },
+      signal,
     });
-    dispatch({ type: GET_ALL_POKEMONS, payload: data });
-    return data;
+    if (signal?.aborted) return;
+    const page = normalizePokemonPage(data, currentPage, perPage);
+    dispatch({ type: GET_ALL_POKEMONS, payload: page });
+    return page;
   } catch (error) {
-    console.error("Error en getAllpokemons:", error.message);
+    if (!axios.isCancel(error)) console.error("Error en getAllpokemons:", error.message);
   }
 };
 

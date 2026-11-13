@@ -1,7 +1,8 @@
 import { lazy, Suspense } from "react";
-import { Box, CircularProgress, CssBaseline, ThemeProvider, Typography } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import theme from "./theme";
+import Loading from "./components/Loading";
 import Nav from "./components/Nav/Nav";
 import RequireAuth from "./components/Auth/RequireAuth";
 import "./App.css";
@@ -20,12 +21,7 @@ export default function App() {
       <div className="app-main">
         <Nav />
         <div className="App">
-          <Suspense fallback={
-            <Box role="status" sx={{ py: 7, textAlign: "center" }}>
-              <CircularProgress size={28} />
-              <Typography color="text.secondary" mt={2}>Cargando página…</Typography>
-            </Box>
-          }>
+          <Suspense fallback={<Loading message="Cargando página…" />}>
             <Routes>
               <Route path="/" element={<PokeHome />} />
               <Route path="/pokemons" element={<Pokemons />} />

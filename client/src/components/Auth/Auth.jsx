@@ -1,3 +1,4 @@
+import Loading from "../Loading";
 import { Alert, Button, Link as MuiLink, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -15,7 +16,7 @@ export default function Auth() {
   const [pending, setPending] = useState(false);
   const requested = location.state?.from;
   const destination = typeof requested === "string" && /^\/(?!\/)/.test(requested) && !/[\\\s]/.test(requested) && [...requested].every(char => char.charCodeAt(0) >= 32 && char.charCodeAt(0) !== 127) ? requested : "/create";
-  if (loading) return <Paper component="section" role="status" sx={{ width: "min(440px, calc(100% - 40px))", mx: "auto", my: 4, p: 4 }}>Comprobando sesión…</Paper>;
+  if (loading) return <Paper component="section" sx={{ width: "min(440px, calc(100% - 40px))", mx: "auto", my: 4, p: 4 }}><Loading message="Comprobando sesión…" sx={{ py: 0 }} /></Paper>;
   if (user) return <Navigate to={destination} replace />;
   async function submit(event) {
     event.preventDefault();

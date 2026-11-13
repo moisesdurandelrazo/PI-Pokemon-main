@@ -17,6 +17,7 @@ const initialState = {
   pokemon: null,
   types: null,
   favorites: [],
+  totalPokemons: null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -26,7 +27,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         pokemons: [...action.payload.data],
-        totalPokemons: action.payload.total ?? action.payload.data.length,
+        totalPokemons: action.payload.total ?? state.totalPokemons,
 
 
       };
