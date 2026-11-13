@@ -37,7 +37,7 @@ export default function Favorites() {
       || String(pokemon.id).toLowerCase().includes(query)
       || getNumber(pokemon.id).toLowerCase().includes(query);
     return matchesSearch && (!activeType || getTypes(pokemon).includes(activeType));
-  }).sort((a, b) => {
+  }).reverse().sort((a, b) => {
     if (sort === "name") return (a.name || "").localeCompare(b.name || "", "es");
     if (sort === "number") return String(a.id).localeCompare(String(b.id), "es", { numeric: true });
     return 0;
